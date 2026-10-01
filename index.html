@@ -171,6 +171,34 @@ input:disabled,select:disabled{opacity:.5;cursor:not-allowed}
 .seg button:hover{border-color:var(--muted)}
 .seg button b{font-family:var(--f-display);font-size:22px;line-height:1;font-weight:700;font-variant-numeric:tabular-nums}
 .seg button[aria-pressed="true"]{background:linear-gradient(135deg,var(--accent),var(--accent-2));border-color:transparent;color:var(--accent-ink)}
+
+/* ---------- ranking ---------- */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:18px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:6px}
+.kpi .kpi-lbl{font-family:var(--f-display);font-weight:600;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.kpi .kpi-val{font-weight:600;font-size:30px;line-height:1}
+.kpi.ok .kpi-val{color:var(--ok)}
+.kpi.warn .kpi-val{color:var(--warn)}
+.ranklist{display:grid;gap:3px;margin-top:18px;border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:8px}
+.rk-row{display:flex;align-items:center;gap:14px;padding:8px 10px;border-radius:8px;transition:background .15s}
+.rk-row:hover,.rk-row:focus-visible{background:var(--surface-2)}
+.rk-row .rk-pos{flex:0 0 22px;font-family:var(--f-mono);font-size:12px;color:var(--muted);text-align:right}
+.rk-row .rk-name{flex:0 0 150px;font-weight:600;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rk-row .rk-track{flex:1;position:relative;height:18px;background:var(--surface-2);border-radius:4px;min-width:0}
+.rk-row .rk-fill{position:absolute;left:0;top:0;bottom:0;border-radius:2px 4px 4px 2px;background:var(--accent);min-width:3px}
+.rk-row .rk-empty{display:flex;align-items:center;gap:6px;height:100%;padding:0 10px;color:var(--warn);font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rk-row .rk-empty svg{flex:none}
+.rk-row.zero{background:color-mix(in srgb,var(--warn-bg) 55%,transparent)}
+.rk-row.zero:hover,.rk-row.zero:focus-visible{background:var(--warn-bg)}
+.rk-row .rk-count{flex:0 0 38px;text-align:right;font-weight:600;font-size:14px;font-variant-numeric:tabular-nums}
+.rk-row.zero .rk-count{color:var(--warn)}
+@media (max-width:620px){
+  .rk-row{flex-wrap:wrap;row-gap:7px}
+  .rk-row .rk-pos{order:1}
+  .rk-row .rk-name{order:2;flex:1 1 auto}
+  .rk-row .rk-count{order:3;flex:0 0 auto}
+  .rk-row .rk-track{order:4;flex:1 1 100%}
+}
 .tablewrap{margin-top:16px;overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}
 table{border-collapse:collapse;width:100%;min-width:1200px;font-size:14px}
 thead th{font-family:var(--f-display);font-weight:600;font-size:14px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);text-align:left;padding:9px 12px;background:var(--surface-2);border-bottom:1px solid var(--line);white-space:nowrap}
@@ -293,6 +321,8 @@ dl.kv dd{margin:0;overflow-wrap:anywhere;white-space:pre-wrap;min-width:0}
     <symbol id="i-ok" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
     <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.5v3M12 18.5v3M21.5 12h-3M5.5 12h-3M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1M18.4 18.4l-2.1-2.1M7.7 7.7L5.6 5.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 3.6L21.3 20H2.7L12 3.6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 9.8v4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="17" r="1" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-rank" viewBox="0 0 24 24"><path d="M4 19V11M11 19V5M18 19v-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
   </defs>
 </svg>
 
@@ -467,6 +497,28 @@ dl.kv dd{margin:0;overflow-wrap:anywhere;white-space:pre-wrap;min-width:0}
     <div class="more"><button class="btn" id="btn-more" type="button" hidden></button></div>
   </section>
 
+  <!-- ============ ADMIN: ranking ============ -->
+  <section id="v-ranking" hidden>
+    <h1 class="view-title">Ranking de envios</h1>
+    <p class="lede">Quantos alvos cada prospector já lançou. Veja quem está mandando mais e quem ainda não lançou nenhum.</p>
+
+    <div class="bar">
+      <div class="field"><label for="rk-periodo">Período</label>
+        <select id="rk-periodo">
+          <option value="todos">Todo o período</option>
+          <option value="hoje">Hoje</option>
+          <option value="7">Últimos 7 dias</option>
+          <option value="30">Últimos 30 dias</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="kpis" id="rk-kpis"></div>
+
+    <div id="rk-status" class="skeleton" role="status">Carregando lançamentos…</div>
+    <div class="ranklist" id="rk-list" hidden></div>
+  </section>
+
   <!-- ============ ADMIN: cadastros ============ -->
   <section id="v-config" hidden>
     <h1 class="view-title">Cadastros</h1>
@@ -549,23 +601,24 @@ const S = {
   loginKind:'campo', loginCache:{}, fails:0, lockUntil:0,
   view:'home', mode:null, limit:100,
   filters:{q:'', status:'todos', prosp:'', periodo:'todos'},
+  rankPeriodo:'todos',
   photos:[], sending:false
 };
 
 /* ---------------- tabs / views ---------------- */
-const VIEWS = { home:'#v-home', login:'#v-login', lancar:'#v-lancar', meus:'#v-meus', painel:'#v-painel', config:'#v-config' };
+const VIEWS = { home:'#v-home', login:'#v-login', lancar:'#v-lancar', meus:'#v-meus', painel:'#v-painel', ranking:'#v-ranking', config:'#v-config' };
 function tabsFor(){
   if (S.view === 'home') return [];
   const home = ['home','Início'];
   if (S.view === 'login') return [home];
-  return S.mode === 'admin' ? [home,['painel','Painel administrativo'],['config','Cadastros']] : [home,['lancar','Lançar alvo'],['meus','Meus lançamentos']];
+  return S.mode === 'admin' ? [home,['painel','Painel administrativo'],['ranking','Ranking'],['config','Cadastros']] : [home,['lancar','Lançar alvo'],['meus','Meus lançamentos']];
 }
 function renderTabs(){
   $('#tabs').replaceChildren(...tabsFor().map(([id,label]) =>
     h('button',{class:'tab',type:'button',role:'tab','aria-selected':String(S.view===id),onclick:()=>setView(id)}, label)));
 }
 function setView(id){
-  const wantAdmin = id === 'painel' || id === 'config', wantCampo = id === 'lancar' || id === 'meus';
+  const wantAdmin = id === 'painel' || id === 'config' || id === 'ranking', wantCampo = id === 'lancar' || id === 'meus';
   if (wantAdmin && !S.isAdmin){ S.loginKind = 'admin'; id = 'login'; }
   else if (wantCampo && !S.me){ S.loginKind = 'campo'; id = 'login'; }
   S.view = id;
@@ -574,13 +627,14 @@ function setView(id){
   if (id === 'login'){ $('#l-pw').value = ''; show($('#e-login'), false); fillLogin(); }
   renderTabs(); updateWho();
   renderActive();
-  if (id === 'config') loadUsers();
+  if (id === 'config' || id === 'ranking') loadUsers();
   window.scrollTo({top:0});
 }
 function renderActive(){
   if (S.view === 'painel') renderPainel();
   else if (S.view === 'meus') renderMeus();
   else if (S.view === 'config') renderConfig();
+  else if (S.view === 'ranking') renderRanking();
 }
 function setConn(state, label){
   $('#dot').className = 'dot' + (state === 'on' ? ' on' : state === 'err' ? ' err' : '');
@@ -881,10 +935,14 @@ function renderMeus(){
 
 /* ---------------- PAINEL ---------------- */
 const STATUS = [['todos','Todos'],['pendente','Sem atribuição'],['atribuida','Atribuídas'],['sem_nota','Sem nota']];
-function baseFiltered(){
-  const f = S.filters, q = norm(f.q), n = new Date();
+function periodoSince(periodo){
+  const n = new Date();
   const dayStr = off => { const d = new Date(n.getFullYear(), n.getMonth(), n.getDate() - off); return d.getFullYear() + '-' + pad2(d.getMonth()+1) + '-' + pad2(d.getDate()); };
-  const since = f.periodo === 'hoje' ? dayStr(0) : f.periodo === '7' ? dayStr(6) : f.periodo === '30' ? dayStr(29) : '';
+  return periodo === 'hoje' ? dayStr(0) : periodo === '7' ? dayStr(6) : periodo === '30' ? dayStr(29) : '';
+}
+function baseFiltered(){
+  const f = S.filters, q = norm(f.q);
+  const since = periodoSince(f.periodo);
   return S.alvos.filter(a => {
     const g = S.gestao.get(a.id) || {};
     if (since && (a.dataLanc || '') < since) return false;
@@ -910,6 +968,52 @@ $('#q').addEventListener('input', e => { S.filters.q = e.target.value; S.limit =
 $('#fl-prosp').addEventListener('change', e => { S.filters.prosp = e.target.value; S.limit = 100; renderPainel(); });
 $('#fl-periodo').addEventListener('change', e => { S.filters.periodo = e.target.value; S.limit = 100; renderPainel(); });
 $('#btn-more').addEventListener('click', () => { S.limit += 100; renderPainel(); });
+
+/* ---------------- RANKING ---------------- */
+$('#rk-periodo').addEventListener('change', e => { S.rankPeriodo = e.target.value; renderRanking(); });
+function renderRanking(){
+  if (!S.isAdmin) return;
+  const st = $('#rk-status'), list = $('#rk-list');
+  if (!S.loaded || !S.usersLoaded){ st.className = 'skeleton'; show(st, true, 'Carregando lançamentos…'); list.hidden = true; return; }
+  const since = periodoSince(S.rankPeriodo);
+  const alvosNoPeriodo = since ? S.alvos.filter(a => (a.dataLanc || '') >= since) : S.alvos;
+  const counts = new Map();
+  for (const nome of S.users.prospector) counts.set(nome, 0);
+  for (const a of alvosNoPeriodo){
+    if (!a.prospector) continue;
+    counts.set(a.prospector, (counts.get(a.prospector) || 0) + 1);
+  }
+  const rows2 = Array.from(counts, ([nome, cnt]) => ({ nome, cnt })).sort((a, b) => b.cnt - a.cnt || a.nome.localeCompare(b.nome, 'pt-BR'));
+  const total = rows2.length;
+  const comEnvio = rows2.filter(r => r.cnt > 0).length;
+  const semEnvio = total - comEnvio;
+
+  $('#rk-kpis').replaceChildren(
+    h('div',{class:'kpi'}, h('span',{class:'kpi-lbl',text:'Prospectores cadastrados'}), h('span',{class:'kpi-val',text:String(total)})),
+    h('div',{class:'kpi ok'}, h('span',{class:'kpi-lbl',text:'Enviando alvos'}), h('span',{class:'kpi-val',text:String(comEnvio)})),
+    h('div',{class:'kpi'+(semEnvio ? ' warn' : '')}, h('span',{class:'kpi-lbl',text:'Sem nenhum envio'}), h('span',{class:'kpi-val',text:String(semEnvio)}))
+  );
+
+  if (!total){
+    st.className = 'empty'; show(st, true); st.replaceChildren(h('b',{text:'Nenhum prospector cadastrado'}), 'Cadastre prospectores na aba Cadastros.');
+    list.hidden = true;
+    return;
+  }
+  st.hidden = true; list.hidden = false;
+  const max = Math.max(1, rows2[0].cnt);
+  list.replaceChildren(...rows2.map((r, i) => {
+    const isZero = r.cnt === 0;
+    const pct = Math.max(3, Math.round((r.cnt / max) * 100));
+    return h('div',{class:'rk-row'+(isZero ? ' zero' : ''), tabindex:'0', title:r.nome+': '+r.cnt+' alvo(s)'+(since ? ' no período selecionado' : '')},
+      h('span',{class:'rk-pos',text:String(i+1)}),
+      h('span',{class:'rk-name',text:r.nome}),
+      isZero
+        ? h('div',{class:'rk-track'}, h('span',{class:'rk-empty'}, icon('i-warn',14), 'Nenhum alvo lançado'))
+        : h('div',{class:'rk-track'}, h('div',{class:'rk-fill',style:'width:'+pct+'%'})),
+      h('span',{class:'rk-count',text:String(r.cnt)})
+    );
+  }));
+}
 
 const rows = new Map();
 function adminNames(){ return S.users.admin.length ? S.users.admin : (S.isAdmin ? [S.me.usuario] : []); }
