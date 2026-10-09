@@ -178,6 +178,7 @@ input:disabled,select:disabled{opacity:.5;cursor:not-allowed}
 .kpi .kpi-lbl{font-family:var(--f-display);font-weight:600;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .kpi .kpi-val{font-weight:600;font-size:30px;line-height:1}
 .kpi.ok .kpi-val{color:var(--ok)}
+.kpi.hero .kpi-val{font-size:48px;line-height:1}
 .kpi.warn .kpi-val{color:var(--warn)}
 .ranklist{display:grid;gap:3px;margin-top:18px;border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:8px}
 .rk-row{display:flex;align-items:center;gap:14px;padding:8px 10px;border-radius:8px;transition:background .15s}
@@ -199,8 +200,66 @@ input:disabled,select:disabled{opacity:.5;cursor:not-allowed}
   .rk-row .rk-count{order:3;flex:0 0 auto}
   .rk-row .rk-track{order:4;flex:1 1 100%}
 }
+/* ---------- campos novos ---------- */
+.locrow{display:flex;gap:10px;flex-wrap:wrap}
+.locrow input{flex:1 1 220px;min-width:0}
+.locrow .btn{flex:0 0 auto}
+.hint.ok{color:var(--ok)}
+.hint a{color:var(--focus)}
+.cellbox{min-width:0}
+.codchip{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:12px;font-weight:500;padding:2px 8px;border-radius:6px;background:var(--accent-soft);color:var(--accent);margin-bottom:4px;max-width:100%}
+.loclink{display:inline-flex;align-items:center;gap:4px;font-size:12.5px;color:var(--focus);text-decoration:none;margin-top:3px}
+.loclink:hover{text-decoration:underline}
+.pill.ok{background:var(--ok-bg);color:var(--ok)}
+.pill.warn{background:var(--warn-bg);color:var(--warn)}
+td select.exec{width:100%;min-width:150px;max-width:230px}
+.acerto{margin-top:6px;min-height:24px;font-size:12.5px;color:var(--muted)}
+.negbar{margin-top:8px;padding:8px 10px;border:1.5px dashed var(--warn);border-radius:8px;background:var(--warn-bg);display:grid;gap:6px}
+.negbar b{font-family:var(--f-display);font-weight:600;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--warn)}
+.negbar select{min-width:0;width:100%}
+.sec-title{font-family:var(--f-display);font-weight:700;font-size:24px;letter-spacing:.05em;text-transform:uppercase;margin-top:28px}
+.sec-title + .ranklist,.sec-title + .hint{margin-top:8px}
+.rk-row .rk-name.long{flex:0 0 250px}
+.rk-row .rk-count.wide{flex:0 0 112px}
+.rk-row.muted .rk-name,.rk-row.muted .rk-count{color:var(--muted);font-weight:500}
+.rk-row .rk-none{display:flex;align-items:center;height:100%;padding:0 10px;color:var(--muted);font-size:12.5px}
+.dvlist{display:grid;gap:6px;margin-top:8px}
+.dv{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;text-align:left;width:100%;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:14px}
+.dv:hover{border-color:var(--accent)}
+.dv .mono{font-size:13px}
+.dv .grow{flex:1 1 200px;color:var(--muted)}
+/* mapa */
+.maplegend{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;margin-top:14px;font-size:13px}
+.maplegend span{display:inline-flex;align-items:center;gap:6px}
+.maplegend .muted{color:var(--muted)}
+.mapbox{position:relative;margin-top:10px;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+#mp-map{height:min(72vh,680px);min-height:380px;background:var(--surface-2)}
+.mapmsg{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:20px;background:color-mix(in srgb,var(--surface) 88%,transparent);color:var(--muted);z-index:500}
+.pin{display:inline-flex;align-items:center;justify-content:center;min-width:34px;height:24px;padding:0 7px;border-radius:12px;font-family:var(--f-mono);font-weight:600;font-size:12px;line-height:1;color:#0A0D13;border:2px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.55);white-space:nowrap}
+i.pin{min-width:16px;width:16px;height:16px;padding:0;border-width:2px}
+.pin.st-pendente{background:#F5A524}
+.pin.st-atribuido{background:#5B9DFF}
+.pin.st-executado{background:#3DD68C}
+.pinwrap{background:none;border:0}
+.mpop{display:grid;gap:3px;min-width:200px;font-family:var(--f-body);font-size:13px;color:var(--ink)}
+.mpop h3{font-size:15px;margin-bottom:2px}
+.mpop .mk{color:var(--muted)}
+.mpop .acts2{display:flex;gap:8px;margin-top:6px;flex-wrap:wrap}
+.leaflet-container{font-family:var(--f-body)}
+.mapbox .leaflet-popup-content-wrapper,.mapbox .leaflet-popup-tip{background:var(--surface);color:var(--ink)}
+.mapbox .leaflet-popup-content{margin:12px 14px}
+.mapbox .leaflet-container a.leaflet-popup-close-button{color:var(--muted)}
+.mapbox .leaflet-popup-content a.loclink{color:var(--focus)}
+.mapbox .leaflet-bar a,.mapbox .leaflet-bar a:hover{background:var(--surface);color:var(--ink);border-bottom-color:var(--line-strong)}
+.leaflet-control-attribution{background:color-mix(in srgb,var(--surface) 85%,transparent)!important;color:var(--muted)!important}
+.leaflet-control-attribution a{color:var(--focus)!important}
+:root:not([data-theme="light"]) .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) brightness(.95) contrast(.9) saturate(.6)}
+@media (max-width:620px){
+  .rk-row .rk-name.long{flex:1 1 0;min-width:0;white-space:normal}
+  .rk-row .rk-count.wide{flex:0 0 auto}
+}
 .tablewrap{margin-top:16px;overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}
-table{border-collapse:collapse;width:100%;min-width:1200px;font-size:14px}
+table{border-collapse:collapse;width:100%;min-width:1420px;font-size:14px}
 thead th{font-family:var(--f-display);font-weight:600;font-size:14px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);text-align:left;padding:9px 12px;background:var(--surface-2);border-bottom:1px solid var(--line);white-space:nowrap}
 thead tr.grp th{font-size:15px;color:var(--ink);letter-spacing:.09em;padding-block:10px;border-bottom:1px solid var(--line-strong)}
 thead tr.grp th.adm{background:var(--accent-soft);border-left:1px solid var(--line-strong)}
@@ -239,7 +298,8 @@ td .eqinput{min-width:140px}
   tbody td:nth-child(5){min-width:126px}
   tbody td:nth-child(6){min-width:84px}
   tbody td:nth-child(7),tbody td:nth-child(8){min-width:148px}
-  tbody td:nth-child(9){min-width:100px}
+  tbody td:nth-child(9){min-width:210px}
+  tbody td:nth-child(10){min-width:100px}
 }
 @media (max-width:899px){
   .tablewrap{overflow:visible;border:0;background:transparent;border-radius:0}
@@ -322,6 +382,7 @@ dl.kv dd{margin:0;overflow-wrap:anywhere;white-space:pre-wrap;min-width:0}
     <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
     <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.5v3M12 18.5v3M21.5 12h-3M5.5 12h-3M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1M18.4 18.4l-2.1-2.1M7.7 7.7L5.6 5.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
     <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 3.6L21.3 20H2.7L12 3.6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 9.8v4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="17" r="1" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.7-6.5-11a6.5 6.5 0 0 1 13 0c0 5.3-6.5 11-6.5 11z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.4" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
     <symbol id="i-rank" viewBox="0 0 24 24"><path d="M4 19V11M11 19V5M18 19v-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
   </defs>
 </svg>
@@ -429,9 +490,25 @@ dl.kv dd{margin:0;overflow-wrap:anywhere;white-space:pre-wrap;min-width:0}
       </div>
 
       <div class="field">
+        <label for="f-codigo">Código <span class="req">*</span></label>
+        <select id="f-codigo" aria-describedby="e-codigo"></select>
+        <p class="err" id="e-codigo" hidden></p>
+      </div>
+
+      <div class="field">
         <label for="f-alvo">Alvo <span class="req">*</span></label>
         <input type="text" id="f-alvo" maxlength="120" autocomplete="off" aria-describedby="e-alvo">
         <p class="err" id="e-alvo" hidden></p>
+      </div>
+
+      <div class="field">
+        <label for="f-loc">Localização do alvo <span class="req">*</span></label>
+        <div class="locrow">
+          <input type="text" id="f-loc" class="mono" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Latitude, longitude ou link do Google Maps" aria-describedby="f-loc-h e-loc">
+          <button type="button" class="btn" id="f-gps"><svg width="18" height="18"><use href="#i-pin"/></svg>Usar minha localização</button>
+        </div>
+        <p class="hint" id="f-loc-h" hidden></p>
+        <p class="err" id="e-loc" hidden></p>
       </div>
 
       <div class="field">
@@ -470,6 +547,7 @@ dl.kv dd{margin:0;overflow-wrap:anywhere;white-space:pre-wrap;min-width:0}
     <div class="bar">
       <div class="field grow"><label for="q">Buscar</label><input type="search" id="q" placeholder="UC, medidor, leitura, instalação, alvo, nota…"></div>
       <div class="field"><label for="fl-prosp">Prospector</label><select id="fl-prosp"></select></div>
+      <div class="field"><label for="fl-cod">Código</label><select id="fl-cod"></select></div>
       <div class="field"><label for="fl-periodo">Período</label>
         <select id="fl-periodo">
           <option value="todos">Todo o período</option>
@@ -485,16 +563,86 @@ dl.kv dd{margin:0;overflow-wrap:anywhere;white-space:pre-wrap;min-width:0}
     <div class="tablewrap" id="tablewrap" hidden>
       <table>
         <thead>
-          <tr class="grp"><th colspan="4">Lançado pelo prospector</th><th colspan="5" class="adm">Tratativa administrativa</th></tr>
+          <tr class="grp"><th colspan="4">Lançado pelo prospector</th><th colspan="6" class="adm">Tratativa administrativa</th></tr>
           <tr>
             <th>Lançamento</th><th>Instalação fiscal</th><th>UC · Medidor · Leitura</th><th>Alvo</th>
-            <th class="adm2">Nº da nota</th><th>Atribuída</th><th>Atribuído por</th><th>Equipe</th><th>Ações</th>
+            <th class="adm2">Nº da nota</th><th>Atribuída</th><th>Atribuído por</th><th>Equipe</th><th>Cód. executado</th><th>Ações</th>
           </tr>
         </thead>
         <tbody id="tbody"></tbody>
       </table>
     </div>
     <div class="more"><button class="btn" id="btn-more" type="button" hidden></button></div>
+  </section>
+
+  <!-- ============ ADMIN: mapa ============ -->
+  <section id="v-mapa" hidden>
+    <h1 class="view-title">Mapa dos alvos</h1>
+    <p class="lede">Localização informada pelo prospector em cada lançamento. Clique em um ponto para ver o código, o dia, quem apontou e a situação.</p>
+
+    <div class="bar">
+      <div class="field"><label for="mp-prosp">Prospector</label><select id="mp-prosp"></select></div>
+      <div class="field"><label for="mp-fcod">Código</label><select id="mp-fcod"></select></div>
+      <div class="field"><label for="mp-status">Situação</label>
+        <select id="mp-status">
+          <option value="">Todas</option>
+          <option value="pendente">Sem atribuição</option>
+          <option value="atribuido">Atribuído</option>
+          <option value="executado">Executado</option>
+        </select>
+      </div>
+      <div class="field"><label for="mp-periodo">Período</label>
+        <select id="mp-periodo">
+          <option value="todos">Todo o período</option>
+          <option value="hoje">Hoje</option>
+          <option value="7">Últimos 7 dias</option>
+          <option value="30">Últimos 30 dias</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="maplegend" aria-label="Legenda">
+      <span><i class="pin st-pendente"></i>Sem atribuição</span>
+      <span><i class="pin st-atribuido"></i>Atribuído</span>
+      <span><i class="pin st-executado"></i>Executado (✓)</span>
+      <span class="muted">O número no ponto é o código do alvo.</span>
+    </div>
+    <div class="mapbox">
+      <div id="mp-map" role="region" aria-label="Mapa com a localização dos alvos"></div>
+      <div id="mp-msg" class="mapmsg" role="status" hidden></div>
+    </div>
+    <p class="hint" id="mp-count" role="status"></p>
+  </section>
+
+  <!-- ============ ADMIN: assertividade ============ -->
+  <section id="v-assert" hidden>
+    <h1 class="view-title">Assertividade</h1>
+    <p class="lede">Compara o código que o prospector apontou com o código executado pela equipe (que você preenche no Painel administrativo). Só entram os alvos que já têm o código executado.</p>
+
+    <div class="bar">
+      <div class="field"><label for="as-prosp">Prospector</label><select id="as-prosp"></select></div>
+      <div class="field"><label for="as-fcod">Código apontado</label><select id="as-fcod"></select></div>
+      <div class="field"><label for="as-periodo">Período</label>
+        <select id="as-periodo">
+          <option value="todos">Todo o período</option>
+          <option value="hoje">Hoje</option>
+          <option value="7">Últimos 7 dias</option>
+          <option value="30">Últimos 30 dias</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="kpis" id="as-kpis"></div>
+    <div id="as-status" class="skeleton" role="status">Carregando lançamentos…</div>
+    <div id="as-body" hidden>
+      <h2 class="sec-title">Por prospector</h2>
+      <div class="ranklist" id="as-pros"></div>
+      <h2 class="sec-title">Por código apontado</h2>
+      <div class="ranklist" id="as-cods"></div>
+      <h2 class="sec-title">Divergências</h2>
+      <p class="hint">Alvos em que o código executado foi diferente do apontado (mais recentes primeiro).</p>
+      <div class="dvlist" id="as-div"></div>
+    </div>
   </section>
 
   <!-- ============ ADMIN: ranking ============ -->
@@ -594,31 +742,75 @@ function uuid(){
 
 /* ---------------- state ---------------- */
 const CFG = window.ALVOS_CONFIG || {};
+
+/* ---------------- códigos de irregularidade ---------------- */
+const CODES = [
+  [109,'Circuito potencial interrompido'],[115,'Medidor avariado'],[129,'Medidor sem alimentação / neutro'],[154,'Ligação clandestina'],
+  [164,'Desvio embutido'],[165,'Desvio antes da medição'],[168,'Ponte no bloco de terminais'],[171,'Ligado à revelia com contrato inativo'],
+  [172,'Ligação invertida'],[174,'Medidor inclinado / deitado'],[175,'Regularização de lig. DS clandestino'],[176,'Regularização de lig. CR de novo contrato'],
+  [188,'Medidor com imã acoplado'],[201,'Medidor com defeito'],[202,'Ligação executada com erro'],[203,'Ligação direta serv. emerg. plantão'],
+  [204,'Equipamento / medidor não implantado'],[209,'Medidor com defeito - aumento de carga à revelia'],[211,'Defeito no medidor - faturado a maior'],
+  [212,'Leitura a menor'],[214,'Medidor retirado para aferição a pedido do cliente'],[215,'Regularização de ligação direta'],
+  [218,'Aumento de carga (AT) à revelia da concessionária'],[221,'Perícia judicial'],[300,'Medição normal'],[301,'Indícios de irregularidade'],
+  [302,'Erro de classificação tarifária'],[303,'Deficiência no padrão de entrada'],[305,'Imóvel desabitado'],[306,'Desligado em campo'],
+  [307,'Medidor sem lacres do laboratório'],[308,'Medidor danificado / com borne oxidado'],[309,'Auto-religado pela medição'],[310,'Blindagem de medição'],
+  [311,'Atualização tecnológica'],[312,'Fornecimento a terceiro'],[314,'Instalação demolida ou duplicidade'],[315,'Recorte']
+];
+const CODE_MAP = new Map(CODES);
+const CODE_NEGOCIADOR = 171;
+const codeLabel = c => c == null ? '—' : c + ' · ' + (CODE_MAP.get(c) || 'Código não listado');
+const gmapsUrl = (lat, lng) => 'https://www.google.com/maps?q=' + lat + ',' + lng;
+const fmtCoord = n => (Math.round(n * 1e6) / 1e6).toFixed(6);
+const NEG_LABEL = { pendente:'Pendente', negociado:'Negociado', nao_negociado:'Não negociado' };
+
+/* lê latitude/longitude digitadas ou coladas (texto simples ou link do Google Maps) */
+const BR_BOX = { latMin:-34, latMax:6, lngMin:-74.5, lngMax:-33 };
+function parseLoc(raw){
+  let s = String(raw || '').trim(); if (!s) return null;
+  try { s = decodeURIComponent(s.replace(/\+/g, ' ')); } catch(e){}
+  const num = x => parseFloat(String(x).replace(',', '.'));
+  const mk = (a, b) => {
+    const lat = num(a), lng = num(b);
+    if (!isFinite(lat) || !isFinite(lng) || Math.abs(lat) > 90 || Math.abs(lng) > 180) return { err:'Coordenadas inválidas.' };
+    if (lat < BR_BOX.latMin || lat > BR_BOX.latMax || lng < BR_BOX.lngMin || lng > BR_BOX.lngMax) return { err:'Essa localização está fora do Brasil. Confira se latitude e longitude não estão trocadas.' };
+    return { lat, lng };
+  };
+  let m;
+  if (/^https?:\/\/(maps\.app\.goo\.gl|goo\.gl\/maps|g\.co\/)/i.test(s)) return { err:'Esse link curto não mostra as coordenadas. Abra o link, copie o endereço completo da barra do navegador, ou use o botão “Usar minha localização”.' };
+  if ((m = /!3d(-?\d+(?:\.\d+)?)!4d(-?\d+(?:\.\d+)?)/.exec(s))) return mk(m[1], m[2]);
+  if ((m = /@(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/.exec(s))) return mk(m[1], m[2]);
+  if ((m = /[?&](?:q|ll|query|destination|center|daddr)=\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)/.exec(s))) return mk(m[1], m[2]);
+  if ((m = /^\s*(-?\d+(?:\.\d+)?)\s*[,;]\s*(-?\d+(?:\.\d+)?)\s*$/.exec(s)) || (m = /^\s*(-?\d+(?:\.\d+)?)\s+(-?\d+(?:\.\d+)?)\s*$/.exec(s))) return mk(m[1], m[2]);
+  if ((m = /^\s*(-?\d+,\d+)\s*[;\s]\s*(-?\d+,\d+)\s*$/.exec(s)) || (m = /^\s*(-?\d+,\d+),\s+(-?\d+,\d+)\s*$/.exec(s))) return mk(m[1], m[2]);
+  return { err:'Não consegui ler a localização. Use o botão “Usar minha localização”, digite latitude e longitude (ex.: -3.731900, -38.526700) ou cole o link completo do Google Maps.' };
+}
 const S = {
   sb:null, me:null, isAdmin:false, connected:false, loaded:false,
   alvos:[], alvoMap:new Map(), gestao:new Map(),
   users:{ prospector:[], admin:[] }, usersLoaded:false,
   loginKind:'campo', loginCache:{}, fails:0, lockUntil:0,
   view:'home', mode:null, limit:100,
-  filters:{q:'', status:'todos', prosp:'', periodo:'todos'},
+  filters:{q:'', status:'todos', prosp:'', periodo:'todos', cod:''},
   rankPeriodo:'todos',
+  assert:{ periodo:'todos', prosp:'', cod:'' },
+  mapa:{ periodo:'todos', prosp:'', cod:'', status:'' },
   photos:[], sending:false
 };
 
 /* ---------------- tabs / views ---------------- */
-const VIEWS = { home:'#v-home', login:'#v-login', lancar:'#v-lancar', meus:'#v-meus', painel:'#v-painel', ranking:'#v-ranking', config:'#v-config' };
+const VIEWS = { home:'#v-home', login:'#v-login', lancar:'#v-lancar', meus:'#v-meus', painel:'#v-painel', mapa:'#v-mapa', assert:'#v-assert', ranking:'#v-ranking', config:'#v-config' };
 function tabsFor(){
   if (S.view === 'home') return [];
   const home = ['home','Início'];
   if (S.view === 'login') return [home];
-  return S.mode === 'admin' ? [home,['painel','Painel administrativo'],['ranking','Ranking'],['config','Cadastros']] : [home,['lancar','Lançar alvo'],['meus','Meus lançamentos']];
+  return S.mode === 'admin' ? [home,['painel','Painel administrativo'],['mapa','Mapa'],['assert','Assertividade'],['ranking','Ranking'],['config','Cadastros']] : [home,['lancar','Lançar alvo'],['meus','Meus lançamentos']];
 }
 function renderTabs(){
   $('#tabs').replaceChildren(...tabsFor().map(([id,label]) =>
     h('button',{class:'tab',type:'button',role:'tab','aria-selected':String(S.view===id),onclick:()=>setView(id)}, label)));
 }
 function setView(id){
-  const wantAdmin = id === 'painel' || id === 'config' || id === 'ranking', wantCampo = id === 'lancar' || id === 'meus';
+  const wantAdmin = ['painel','config','ranking','mapa','assert'].includes(id), wantCampo = id === 'lancar' || id === 'meus';
   if (wantAdmin && !S.isAdmin){ S.loginKind = 'admin'; id = 'login'; }
   else if (wantCampo && !S.me){ S.loginKind = 'campo'; id = 'login'; }
   S.view = id;
@@ -627,7 +819,7 @@ function setView(id){
   if (id === 'login'){ $('#l-pw').value = ''; show($('#e-login'), false); fillLogin(); }
   renderTabs(); updateWho();
   renderActive();
-  if (id === 'config' || id === 'ranking') loadUsers();
+  if (['config','ranking','assert','mapa'].includes(id)) loadUsers();
   window.scrollTo({top:0});
 }
 function renderActive(){
@@ -635,6 +827,8 @@ function renderActive(){
   else if (S.view === 'meus') renderMeus();
   else if (S.view === 'config') renderConfig();
   else if (S.view === 'ranking') renderRanking();
+  else if (S.view === 'assert') renderAssert();
+  else if (S.view === 'mapa') renderMapa();
 }
 function setConn(state, label){
   $('#dot').className = 'dot' + (state === 'on' ? ' on' : state === 'err' ? ' err' : '');
@@ -669,7 +863,7 @@ async function afterLogin(){
 }
 
 async function init(){
-  setView('home'); buildFilters(); renderPhotos(); refreshAs(); resetDate(); updateSubmit();
+  fillCodeSelects(); setView('home'); buildFilters(); renderPhotos(); refreshAs(); resetDate(); updateSubmit();
   const bad = !CFG.SUPABASE_URL || !CFG.SUPABASE_ANON_KEY || /COLE|SEU_/i.test(CFG.SUPABASE_URL + CFG.SUPABASE_ANON_KEY);
   if (bad){
     setConn('err','Site sem configuração');
@@ -693,14 +887,14 @@ async function init(){
 }
 
 /* ---------------- dados ---------------- */
-const mapAlvo = r => ({ id:r.id, criadoEm:Date.parse(r.criado_em), dataLanc:r.data_lancamento || '', uid:r.autor_id, prospector:r.prospector, medicaoFiscal:r.medicao_fiscal, uc:r.uc, medidor:r.medidor, leitura:r.leitura || '', alvo:r.alvo, obs:r.obs || '', fotos:r.fotos || [] });
-const mapGestao = g => ({ nota:g.nota || '', atribuida:!!g.atribuida, atribuidoPor:g.atribuido_por || '', equipe:g.equipe || '', atribuidoEm:g.atribuido_em ? Date.parse(g.atribuido_em) : null, atualizadoPor:g.atualizado_por || '' });
+const mapAlvo = r => ({ id:r.id, criadoEm:Date.parse(r.criado_em), dataLanc:r.data_lancamento || '', uid:r.autor_id, prospector:r.prospector, medicaoFiscal:r.medicao_fiscal, uc:r.uc, medidor:r.medidor, leitura:r.leitura || '', codigo:r.codigo == null ? null : Number(r.codigo), lat:r.latitude == null ? null : Number(r.latitude), lng:r.longitude == null ? null : Number(r.longitude), alvo:r.alvo, obs:r.obs || '', fotos:r.fotos || [] });
+const mapGestao = g => ({ nota:g.nota || '', atribuida:!!g.atribuida, atribuidoPor:g.atribuido_por || '', equipe:g.equipe || '', atribuidoEm:g.atribuido_em ? Date.parse(g.atribuido_em) : null, atualizadoPor:g.atualizado_por || '', codExec:g.codigo_executado == null ? null : Number(g.codigo_executado), negEnv:!!g.negociador_enviado, neg:g.negociacao || 'pendente' });
 let loading = false;
 async function loadAlvos(){
   if (!S.me || !S.sb || loading) return;
   loading = true;
   try {
-    const cols = 'id,criado_em,data_lancamento,autor_id,prospector,medicao_fiscal,uc,medidor,leitura,alvo,obs,fotos' + (S.isAdmin ? ',gestao(*)' : '');
+    const cols = 'id,criado_em,data_lancamento,autor_id,prospector,medicao_fiscal,uc,medidor,leitura,codigo,latitude,longitude,alvo,obs,fotos' + (S.isAdmin ? ',gestao(*)' : '');
     const { data, error } = await S.sb.from('alvos').select(cols).order('data_lancamento',{ascending:false}).order('criado_em',{ascending:false}).limit(3000);
     if (error) throw error;
     S.alvos = data.map(mapAlvo); S.alvoMap = new Map(S.alvos.map(a => [a.id, a]));
@@ -789,13 +983,51 @@ $('#logout').addEventListener('click', async () => {
 });
 
 /* ---------------- FORM: lançar ---------------- */
-const F = { data:$('#f-data'), med:$('#f-med'), uc:$('#f-uc'), medidor:$('#f-medidor'), leitura:$('#f-leitura'), alvo:$('#f-alvo'), obs:$('#f-obs'), file:$('#f-file'), submit:$('#f-submit'), progress:$('#f-progress') };
+const F = { data:$('#f-data'), med:$('#f-med'), uc:$('#f-uc'), medidor:$('#f-medidor'), leitura:$('#f-leitura'), codigo:$('#f-codigo'), loc:$('#f-loc'), alvo:$('#f-alvo'), obs:$('#f-obs'), file:$('#f-file'), submit:$('#f-submit'), progress:$('#f-progress') };
 function resetDate(){ F.data.max = todayStr(); F.data.value = todayStr(); }
 function refreshAs(){ $('#f-as').textContent = S.me ? S.me.usuario : '—'; }
 function updateSubmit(){ F.submit.disabled = !S.sb || !S.me || S.sending; }
 function setErr(key, input, msg){ const p = $('#e-'+key); show(p, true, msg); if (input) input.classList.add('invalid'); }
 function clearErr(key, input){ show($('#e-'+key), false); if (input) input.classList.remove('invalid'); }
-[['data',F.data],['med',F.med],['uc',F.uc],['medidor',F.medidor],['alvo',F.alvo]].forEach(([k,el]) => el.addEventListener('input', () => clearErr(k, el)));
+[['data',F.data],['med',F.med],['uc',F.uc],['medidor',F.medidor],['alvo',F.alvo],['leitura',F.leitura]].forEach(([k,el]) => el.addEventListener('input', () => clearErr(k, el)));
+F.codigo.addEventListener('change', () => clearErr('codigo', F.codigo));
+
+function fillCodeSelects(){
+  const opts = ph => [h('option',{value:'',text:ph}), ...CODES.map(([c,d]) => h('option',{value:String(c),text:c + ' · ' + d}))];
+  F.codigo.replaceChildren(...opts('Selecione o código'));
+  $('#fl-cod').replaceChildren(...opts('Todos'));
+  $('#as-fcod').replaceChildren(...opts('Todos'));
+  $('#mp-fcod').replaceChildren(...opts('Todos'));
+}
+
+/* localização do alvo */
+function readLoc(){ return parseLoc(F.loc.value); }
+function showLocHint(extra){
+  const hint = $('#f-loc-h'), r = readLoc();
+  if (!r || r.err){ show(hint, false); return; }
+  hint.className = 'hint ok'; hint.hidden = false;
+  hint.replaceChildren('✓ Latitude ' + fmtCoord(r.lat) + ' · Longitude ' + fmtCoord(r.lng) + (extra ? ' · ' + extra : '') + ' — ', h('a',{href:gmapsUrl(r.lat, r.lng),target:'_blank',rel:'noopener noreferrer',text:'conferir no mapa'}));
+}
+F.loc.addEventListener('input', () => { clearErr('loc', F.loc); showLocHint(); });
+F.loc.addEventListener('blur', () => { const r = readLoc(); if (r && r.err) setErr('loc', F.loc, r.err); });
+$('#f-gps').addEventListener('click', () => {
+  const btn = $('#f-gps');
+  if (!navigator.geolocation){ setErr('loc', F.loc, 'Este aparelho não permite obter a localização. Digite latitude e longitude ou cole o link do Google Maps.'); return; }
+  const label = btn.lastChild.nodeValue; btn.disabled = true; btn.lastChild.nodeValue = 'Obtendo localização…';
+  navigator.geolocation.getCurrentPosition(pos => {
+    btn.disabled = false; btn.lastChild.nodeValue = label;
+    F.loc.value = fmtCoord(pos.coords.latitude) + ', ' + fmtCoord(pos.coords.longitude);
+    clearErr('loc', F.loc);
+    const acc = Math.round(pos.coords.accuracy || 0);
+    showLocHint(acc ? 'precisão de cerca de ' + acc + ' m' : '');
+    if (acc > 150){ const hint = $('#f-loc-h'); hint.className = 'hint warn'; hint.append(' Precisão baixa: se puder, vá para um local aberto e toque de novo.'); }
+  }, err => {
+    btn.disabled = false; btn.lastChild.nodeValue = label;
+    setErr('loc', F.loc, err && err.code === 1
+      ? 'Permissão de localização negada. Libere nas configurações do navegador, ou digite/cole a localização.'
+      : 'Não foi possível obter a localização agora. Tente de novo ao ar livre, ou digite/cole a localização.');
+  }, { enableHighAccuracy:true, timeout:20000, maximumAge:0 });
+});
 
 let dupTimer = null, dupToken = 0;
 F.uc.addEventListener('input', () => {
@@ -872,7 +1104,9 @@ F.file.addEventListener('change', async () => {
 $('#f').addEventListener('submit', async (ev) => {
   ev.preventDefault();
   if (S.sending || !S.sb || !S.me) return;
-  const v = { data_lancamento:F.data.value, medicao_fiscal:F.med.value.trim(), uc:F.uc.value.trim(), medidor:F.medidor.value.trim(), leitura:F.leitura.value.trim(), alvo:F.alvo.value.trim(), obs:F.obs.value.trim() };
+  const v = { data_lancamento:F.data.value, medicao_fiscal:F.med.value.trim(), uc:F.uc.value.trim(), medidor:F.medidor.value.trim(), leitura:F.leitura.value.trim(), codigo:F.codigo.value ? Number(F.codigo.value) : null, alvo:F.alvo.value.trim(), obs:F.obs.value.trim() };
+  const loc = readLoc();
+  if (loc && !loc.err){ v.latitude = loc.lat; v.longitude = loc.lng; }
   let first = null;
   const chk = (ok, key, el, msg) => { if (!ok){ setErr(key, el, msg); if (!first) first = el; } };
   chk(/^\d{4}-\d{2}-\d{2}$/.test(v.data_lancamento), 'data', F.data, 'Informe a data do lançamento.');
@@ -881,7 +1115,9 @@ $('#f').addEventListener('submit', async (ev) => {
   chk(v.uc, 'uc', F.uc, 'Informe a UC do cliente.');
   chk(v.medidor, 'medidor', F.medidor, 'Informe o medidor do cliente.');
   chk(v.leitura, 'leitura', F.leitura, 'Informe a leitura.');
+  chk(v.codigo != null, 'codigo', F.codigo, 'Selecione o código.');
   chk(v.alvo, 'alvo', F.alvo, 'Informe o alvo.');
+  chk(loc && !loc.err, 'loc', F.loc, loc && loc.err ? loc.err : 'Informe a localização do alvo (use o botão ou cole latitude e longitude).');
   if (first){ first.focus(); return; }
 
   S.sending = true; updateSubmit();
@@ -899,7 +1135,7 @@ $('#f').addEventListener('submit', async (ev) => {
     F.progress.textContent = 'Salvando lançamento…';
     const { error } = await S.sb.from('alvos').insert(Object.assign({ id, fotos:uploaded }, v));
     if (error) throw error;
-    F.med.value = F.uc.value = F.medidor.value = F.leitura.value = F.alvo.value = F.obs.value = ''; resetDate();
+    F.med.value = F.uc.value = F.medidor.value = F.leitura.value = F.alvo.value = F.obs.value = F.loc.value = ''; F.codigo.value = ''; show($('#f-loc-h'), false); resetDate();
     revoke(S.photos); S.photos = []; renderPhotos(); show($('#f-uc-h'), false);
     toast('Alvo lançado com sucesso.');
     window.scrollTo({top:0, behavior:'smooth'});
@@ -930,11 +1166,12 @@ function renderMeus(){
         h('span',{class:'mono',text:'UC '+(a.uc||'—')}),
         h('span',{class:'mono',text:'Medidor '+(a.medidor||'—')}),
         h('span',{class:'mono',text:'Leitura '+(a.leitura||'—')}),
+        h('span',{class:'mono',text:'Cód. '+(a.codigo == null ? '—' : a.codigo)}),
         h('span',{text:(a.fotos||[]).length + ' foto(s)'}))))));
 }
 
 /* ---------------- PAINEL ---------------- */
-const STATUS = [['todos','Todos'],['pendente','Sem atribuição'],['atribuida','Atribuídas'],['sem_nota','Sem nota']];
+const STATUS = [['todos','Todos'],['pendente','Sem atribuição'],['atribuida','Atribuídas'],['sem_nota','Sem nota'],['executado','Executados'],['sem_exec','Sem execução']];
 function periodoSince(periodo){
   const n = new Date();
   const dayStr = off => { const d = new Date(n.getFullYear(), n.getMonth(), n.getDate() - off); return d.getFullYear() + '-' + pad2(d.getMonth()+1) + '-' + pad2(d.getDate()); };
@@ -947,11 +1184,26 @@ function baseFiltered(){
     const g = S.gestao.get(a.id) || {};
     if (since && (a.dataLanc || '') < since) return false;
     if (f.prosp && a.prospector !== f.prosp) return false;
-    if (q && !norm([fmtDay(a.dataLanc),a.medicaoFiscal,a.uc,a.medidor,a.leitura,a.alvo,a.prospector,a.obs,g.nota,g.equipe,g.atribuidoPor].join(' ')).includes(q)) return false;
+    if (f.cod && String(a.codigo) !== f.cod) return false;
+    if (q && !norm([fmtDay(a.dataLanc),a.medicaoFiscal,a.uc,a.medidor,a.leitura,a.codigo,g.codExec,a.alvo,a.prospector,a.obs,g.nota,g.equipe,g.atribuidoPor].join(' ')).includes(q)) return false;
     return true;
   });
 }
-const statusOk = (a, st) => { const g = S.gestao.get(a.id) || {}; return st === 'todos' || (st === 'pendente' && !g.atribuida) || (st === 'atribuida' && !!g.atribuida) || (st === 'sem_nota' && !g.nota); };
+const statusOk = (a, st) => { const g = S.gestao.get(a.id) || {}; return st === 'todos' || (st === 'pendente' && !g.atribuida) || (st === 'atribuida' && !!g.atribuida) || (st === 'sem_nota' && !g.nota) || (st === 'executado' && g.codExec != null) || (st === 'sem_exec' && g.codExec == null); };
+const alvoStatus = a => { const g = S.gestao.get(a.id) || {}; return g.codExec != null ? 'executado' : g.atribuida ? 'atribuido' : 'pendente'; };
+const ST_LABEL = { pendente:'Sem atribuição', atribuido:'Atribuído', executado:'Executado' };
+/* acerto: null = ainda não dá para avaliar (falta o código apontado ou o executado) */
+const acertoOf = a => { const g = S.gestao.get(a.id) || {}; return (a.codigo != null && g.codExec != null) ? a.codigo === g.codExec : null; };
+function filterBy(f){
+  const since = periodoSince(f.periodo);
+  return S.alvos.filter(a => {
+    if (since && (a.dataLanc || '') < since) return false;
+    if (f.prosp && a.prospector !== f.prosp) return false;
+    if (f.cod && String(a.codigo) !== f.cod) return false;
+    if (f.status && alvoStatus(a) !== f.status) return false;
+    return true;
+  });
+}
 
 function fillSelect(sel, list, value, placeholder){
   const vals = list.slice(); if (value && !vals.includes(value)) vals.push(value);
@@ -962,12 +1214,131 @@ function buildFilters(){
   const prosps = Array.from(new Set(S.users.prospector.concat(S.alvos.map(a => a.prospector).filter(Boolean)))).sort();
   const eqs = Array.from(new Set(Array.from(S.gestao.values()).map(g => g.equipe).filter(Boolean))).sort();
   fillSelect($('#fl-prosp'), prosps, S.filters.prosp, 'Todos');
+  fillSelect($('#as-prosp'), prosps, S.assert.prosp, 'Todos');
+  fillSelect($('#mp-prosp'), prosps, S.mapa.prosp, 'Todos');
   $('#dl-equipes').replaceChildren(...eqs.map(n => h('option',{value:n})));
 }
 $('#q').addEventListener('input', e => { S.filters.q = e.target.value; S.limit = 100; renderPainel(); });
 $('#fl-prosp').addEventListener('change', e => { S.filters.prosp = e.target.value; S.limit = 100; renderPainel(); });
 $('#fl-periodo').addEventListener('change', e => { S.filters.periodo = e.target.value; S.limit = 100; renderPainel(); });
+$('#fl-cod').addEventListener('change', e => { S.filters.cod = e.target.value; S.limit = 100; renderPainel(); });
 $('#btn-more').addEventListener('click', () => { S.limit += 100; renderPainel(); });
+
+/* ---------------- ASSERTIVIDADE ---------------- */
+[['as-prosp','prosp'],['as-fcod','cod'],['as-periodo','periodo']].forEach(([id,k]) => $('#' + id).addEventListener('change', e => { S.assert[k] = e.target.value; renderAssert(); }));
+const pct = (n, d) => d ? Math.round(n * 100 / d) : null;
+function asRow(pos, name, title, g, long){
+  const none = !g.n, p = pct(g.ok, g.n);
+  return h('div',{class:'rk-row' + (none ? ' muted' : ''), tabindex:'0', title},
+    h('span',{class:'rk-pos',text:String(pos)}),
+    h('span',{class:'rk-name' + (long ? ' long' : ''),text:name}),
+    none ? h('div',{class:'rk-track'}, h('span',{class:'rk-none',text:'Sem alvos avaliados'}))
+         : h('div',{class:'rk-track'}, h('div',{class:'rk-fill',style:'width:' + Math.max(p, 1) + '%'})),
+    h('span',{class:'rk-count wide',text:none ? '—' : p + '% · ' + g.ok + '/' + g.n}));
+}
+function renderAssert(){
+  if (!S.isAdmin) return;
+  const st = $('#as-status'), body = $('#as-body');
+  if (!S.loaded || !S.usersLoaded){ st.className = 'skeleton'; show(st, true, 'Carregando lançamentos…'); body.hidden = true; $('#as-kpis').replaceChildren(); return; }
+  st.hidden = true; body.hidden = false;
+  const list = filterBy(S.assert);
+  const aval = list.filter(a => acertoOf(a) != null);
+  const acertos = aval.filter(a => acertoOf(a)).length, diverg = aval.length - acertos;
+  const aguard = list.filter(a => a.codigo != null && (S.gestao.get(a.id) || {}).codExec == null).length;
+  const geral = pct(acertos, aval.length);
+  const kpi = (lbl, val, cls) => h('div',{class:'kpi' + (cls ? ' ' + cls : '')}, h('span',{class:'kpi-lbl',text:lbl}), h('span',{class:'kpi-val',text:String(val)}));
+  $('#as-kpis').replaceChildren(
+    kpi('Assertividade geral', geral == null ? '—' : geral + '%', 'hero ok'),
+    kpi('Alvos avaliados', aval.length),
+    kpi('Acertos', acertos, 'ok'),
+    kpi('Divergências', diverg, diverg ? 'warn' : ''),
+    kpi('Aguardando execução', aguard));
+
+  const order = (a, b) => (!!b.n - !!a.n) || ((pct(b.ok, b.n) || 0) - (pct(a.ok, a.n) || 0)) || (b.n - a.n) || String(a.k).localeCompare(String(b.k), 'pt-BR');
+  const byP = new Map();
+  for (const n of S.users.prospector) if (!S.assert.prosp || n === S.assert.prosp) byP.set(n, { k:n, n:0, ok:0 });
+  for (const a of aval){ if (!byP.has(a.prospector)) byP.set(a.prospector, { k:a.prospector, n:0, ok:0 }); const g = byP.get(a.prospector); g.n++; if (acertoOf(a)) g.ok++; }
+  const pr = Array.from(byP.values()).sort(order);
+  $('#as-pros').replaceChildren(...(pr.length ? pr.map((g, i) => asRow(i + 1, g.k, g.k + ': ' + g.ok + ' acerto(s) em ' + g.n + ' avaliado(s)', g)) : [h('div',{class:'empty'}, h('b',{text:'Nenhum prospector cadastrado'}))]));
+
+  const byC = new Map();
+  for (const a of aval){ if (!byC.has(a.codigo)) byC.set(a.codigo, { k:a.codigo, n:0, ok:0 }); const g = byC.get(a.codigo); g.n++; if (acertoOf(a)) g.ok++; }
+  const cr = Array.from(byC.values()).sort((a, b) => order(a, b));
+  const emptyMsg = h('div',{class:'empty'}, h('b',{text:'Ainda não há alvos avaliados'}), 'Preencha o “Cód. executado” dos alvos no Painel administrativo.');
+  $('#as-cods').replaceChildren(...(cr.length ? cr.map((g, i) => asRow(i + 1, codeLabel(g.k), codeLabel(g.k) + ': ' + g.ok + ' acerto(s) em ' + g.n, g, true)) : [emptyMsg]));
+
+  const dv = aval.filter(a => !acertoOf(a)).slice(0, 100);
+  $('#as-div').replaceChildren(...(dv.length ? dv.map(a => { const g = S.gestao.get(a.id) || {};
+    return h('button',{class:'dv',type:'button',onclick:() => openDetail(a.id, true)},
+      h('span',{class:'mono',text:fmtDay(a.dataLanc)}), h('b',{text:a.prospector || '—'}), h('span',{class:'mono',text:'UC ' + (a.uc || '—')}),
+      h('span',{class:'grow',text:'Apontou ' + codeLabel(a.codigo) + '  →  Executado ' + codeLabel(g.codExec)}),
+      g.equipe ? h('span',{class:'pill',text:g.equipe}) : null); })
+    : [h('div',{class:'empty'}, h('b',{text:aval.length ? 'Nenhuma divergência' : 'Nada para mostrar ainda'}))]));
+}
+
+/* ---------------- MAPA ---------------- */
+const LEAFLET = { css:'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css', js:'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js' };
+let leafletP = null, mapObj = null, mapLayer = null, mapSig = '';
+function loadLeaflet(){
+  if (window.L) return Promise.resolve();
+  if (leafletP) return leafletP;
+  leafletP = new Promise((res, rej) => {
+    document.head.append(h('link',{rel:'stylesheet',href:LEAFLET.css}));
+    const sc = h('script',{src:LEAFLET.js}); sc.onload = res; sc.onerror = () => { leafletP = null; rej(new Error('leaflet')); };
+    document.head.append(sc);
+  });
+  return leafletP;
+}
+[['mp-prosp','prosp'],['mp-fcod','cod'],['mp-status','status'],['mp-periodo','periodo']].forEach(([id,k]) => $('#' + id).addEventListener('change', e => { S.mapa[k] = e.target.value; renderMapa(); }));
+function popupFor(a){
+  const g = S.gestao.get(a.id) || {}, st = alvoStatus(a), ac = acertoOf(a);
+  const row = (k, v) => h('div',{}, h('span',{class:'mk',text:k + ': '}), v);
+  const kids = [
+    h('h3',{text:'Código ' + codeLabel(a.codigo)}),
+    row('Data', fmtDay(a.dataLanc)), row('Apontado por', a.prospector || '—'),
+    row('UC', a.uc || '—'), row('Instalação fiscal', a.medicaoFiscal || '—'), row('Alvo', a.alvo || '—'),
+    row('Situação', ST_LABEL[st] + (g.atribuida && g.equipe ? ' · ' + g.equipe : ''))
+  ];
+  if (g.codExec != null) kids.push(row('Cód. executado', codeLabel(g.codExec) + (ac == null ? '' : ac ? ' (acertou)' : ' (divergente)')));
+  if (a.codigo === CODE_NEGOCIADOR) kids.push(row('Negociador', g.negEnv ? 'enviado · ' + NEG_LABEL[g.neg || 'pendente'] : 'ainda não enviado'));
+  kids.push(h('div',{class:'acts2'},
+    h('a',{class:'loclink',href:gmapsUrl(a.lat, a.lng),target:'_blank',rel:'noopener noreferrer'}, icon('i-pin',14), 'Abrir no Google Maps'),
+    h('button',{class:'btn sm',type:'button',text:'Ver detalhes e fotos',onclick:() => openDetail(a.id, true)})));
+  return h('div',{class:'mpop'}, ...kids);
+}
+function renderMapa(){
+  if (!S.isAdmin) return;
+  const msg = $('#mp-msg');
+  if (!S.loaded){ show(msg, true, 'Carregando lançamentos…'); return; }
+  if (!window.L){
+    show(msg, true, 'Carregando o mapa…');
+    loadLeaflet().then(() => { if (S.view === 'mapa') renderMapa(); }).catch(() => show(msg, true, 'Não foi possível carregar o mapa. Confira a conexão e abra a aba de novo.'));
+    return;
+  }
+  if (!mapObj){
+    mapObj = L.map('mp-map').setView([-5, -45], 5);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom:19, attribution:'© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>' }).addTo(mapObj);
+    mapLayer = L.layerGroup().addTo(mapObj);
+  }
+  mapObj.invalidateSize();
+  const list = filterBy(S.mapa), withLoc = list.filter(a => a.lat != null && a.lng != null);
+  mapLayer.clearLayers();
+  const pts = [];
+  for (const a of withLoc){
+    const st = alvoStatus(a), label = (st === 'executado' ? '✓ ' : '') + (a.codigo == null ? '?' : Number(a.codigo));
+    const ic = L.divIcon({ className:'pinwrap', html:'<span class="pin st-' + st + '">' + label + '</span>', iconSize:[46, 26], iconAnchor:[23, 13], popupAnchor:[0, -14] });
+    L.marker([a.lat, a.lng], { icon:ic, title:'Cód. ' + a.codigo + ' · UC ' + a.uc, riseOnHover:true }).bindPopup(() => popupFor(a), { maxWidth:320 }).addTo(mapLayer);
+    pts.push([a.lat, a.lng]);
+  }
+  const sig = JSON.stringify(S.mapa);
+  if (sig !== mapSig && pts.length){
+    mapSig = sig;
+    if (pts.length === 1) mapObj.setView(pts[0], 15); else mapObj.fitBounds(L.latLngBounds(pts), { padding:[40, 40], maxZoom:16 });
+  }
+  const sem = list.length - withLoc.length;
+  $('#mp-count').textContent = withLoc.length + (withLoc.length === 1 ? ' alvo no mapa' : ' alvos no mapa') + (sem ? ' · ' + sem + ' sem localização (lançamentos antigos)' : '');
+  show(msg, !withLoc.length, 'Nenhum alvo com localização para esses filtros.');
+}
 
 /* ---------------- RANKING ---------------- */
 $('#rk-periodo').addEventListener('change', e => { S.rankPeriodo = e.target.value; renderRanking(); });
@@ -1025,7 +1396,9 @@ function buildRow(a){
   r.med = h('span',{class:'mono'}); td('Instalação fiscal').append(r.med);
   r.uc = h('span'); r.medidor = h('span'); r.leitura = h('span');
   td('UC · Medidor · Leitura').append(h('div',{class:'two'}, h('span',{}, h('i',{text:'UC'}), r.uc), h('span',{}, h('i',{text:'MED'}), r.medidor), h('span',{}, h('i',{text:'LEIT'}), r.leitura)));
-  r.alvo = h('div',{class:'alvotxt'}); r.obsHint = h('div',{class:'obs'}); td('Alvo').append(r.alvo, r.obsHint);
+  r.cod = h('div',{class:'codchip'}); r.alvo = h('div',{class:'alvotxt'}); r.obsHint = h('div',{class:'obs'});
+  r.locA = a.lat != null ? h('a',{class:'loclink',href:gmapsUrl(a.lat, a.lng),target:'_blank',rel:'noopener noreferrer'}, icon('i-pin',14), 'Ver no mapa') : h('span',{class:'hint',text:'Sem localização'});
+  td('Alvo').append(h('div',{class:'cellbox'}, r.cod, r.alvo, r.obsHint, r.locA));
   r.ver = h('button',{class:'btn sm verbtn',type:'button',onclick:()=>openDetail(a.id, true),'aria-label':'Ver detalhes e fotos'}, icon('i-eye',16), h('span',{text:'Ver'}), (r.fotos = h('span',{class:'pill'})));
   r.nota = h('input',{type:'text',class:'nota mono',maxlength:'40',id:'n-'+a.id,'aria-label':'Número da nota',placeholder:'Nº da nota',autocomplete:'off'});
   td('Nº da nota','adm first').append(r.nota);
@@ -1034,6 +1407,16 @@ function buildRow(a){
   r.por = h('select',{id:'p-'+a.id,'aria-label':'Atribuído por'}); td('Atribuído por','adm').append(r.por);
   r.equipe = h('input',{type:'text',class:'eqinput',id:'e-'+a.id,'aria-label':'Equipe atribuída',list:'dl-equipes',maxlength:'60',placeholder:'Digite a equipe',autocomplete:'off'}); td('Equipe','adm').append(r.equipe);
   r.save = h('button',{class:'btn primary sm save',type:'button',text:'Salvar',onclick:()=>saveRow(tr)});
+  r.exec = h('select',{class:'exec',id:'x-'+a.id,'aria-label':'Código executado pela equipe'}, h('option',{value:'',text:'Selecione'}), ...CODES.map(([c,d]) => h('option',{value:String(c),text:c + ' · ' + d})));
+  r.acerto = h('div',{class:'acerto'});
+  const cx = h('div',{class:'cellbox'}, r.exec, r.acerto); td('Cód. executado','adm').append(cx);
+  if (a.codigo === CODE_NEGOCIADOR){
+    r.negChk = h('input',{type:'checkbox',id:'ng-'+a.id}); r.negTxt = h('span');
+    r.negSw = h('label',{class:'sw'}, r.negChk, r.negTxt);
+    r.negRes = h('select',{id:'nr-'+a.id,'aria-label':'Resultado da negociação'}, ...Object.entries(NEG_LABEL).map(([v,l]) => h('option',{value:v,text:l})));
+    r.negbar = h('div',{class:'negbar'}, h('b',{text:'Negociador'}), r.negSw, r.negRes);
+    cx.append(r.negbar);
+  }
   td('Ações','adm actions').append(h('div',{class:'acts'}, r.ver, r.save));
   tr._r = r; tr._id = a.id; tr._dirty = false;
   const dirty = () => { tr._dirty = isDirty(tr); syncRow(tr); };
@@ -1052,14 +1435,28 @@ function buildRow(a){
   };
   r.por.addEventListener('change', autoOn);
   r.equipe.addEventListener('input', autoOn);
+  r.exec.addEventListener('change', dirty);
+  if (r.negbar){
+    r.negChk.addEventListener('change', () => { if (!r.negChk.checked) r.negRes.value = 'pendente'; dirty(); });
+    r.negRes.addEventListener('change', dirty);
+  }
   return tr;
 }
-const draftOf = tr => ({ nota:tr._r.nota.value.trim(), atribuida:tr._r.chk.checked, por:tr._r.por.value, equipe:tr._r.equipe.value.trim() });
-function baseOf(g){ g = g || {}; return { nota:g.nota||'', atribuida:!!g.atribuida, por:g.atribuidoPor||'', equipe:g.equipe||'' }; }
-function isDirty(tr){ const d = draftOf(tr), b = baseOf(S.gestao.get(tr._id)); return d.nota !== b.nota || d.atribuida !== b.atribuida || d.por !== b.por || d.equipe !== b.equipe; }
+const draftOf = tr => {
+  const r = tr._r, b = baseOf(S.gestao.get(tr._id));
+  return { nota:r.nota.value.trim(), atribuida:r.chk.checked, por:r.por.value, equipe:r.equipe.value.trim(), exec:r.exec.value,
+    negEnv:r.negbar ? r.negChk.checked : b.negEnv, neg:r.negbar ? r.negRes.value : b.neg };
+};
+function baseOf(g){ g = g || {}; return { nota:g.nota||'', atribuida:!!g.atribuida, por:g.atribuidoPor||'', equipe:g.equipe||'', exec:g.codExec == null ? '' : String(g.codExec), negEnv:!!g.negEnv, neg:g.neg||'pendente' }; }
+function isDirty(tr){ const d = draftOf(tr), b = baseOf(S.gestao.get(tr._id)); return Object.keys(b).some(k => d[k] !== b[k]); }
 function syncRow(tr){
   const r = tr._r, on = r.chk.checked;
   r.sw.classList.toggle('on', on); r.chkTxt.textContent = on ? 'Sim' : 'Não';
+  const a = S.alvoMap.get(tr._id), ex = r.exec.value;
+  if (!ex) r.acerto.replaceChildren('Aguardando execução');
+  else if (a && a.codigo != null){ const ok = Number(ex) === a.codigo; r.acerto.replaceChildren(h('span',{class:'pill ' + (ok ? 'ok' : 'warn')}, icon(ok ? 'i-ok' : 'i-warn', 14), ok ? 'Acertou' : 'Divergente (apontou ' + a.codigo + ')')); }
+  else r.acerto.replaceChildren('Alvo sem código apontado');
+  if (r.negbar){ r.negTxt.textContent = r.negChk.checked ? 'Enviado' : 'Não enviado'; r.negSw.classList.toggle('on', r.negChk.checked); r.negRes.disabled = !r.negChk.checked; }
   r.save.disabled = !tr._dirty;
 }
 function updateRow(tr, a){
@@ -1067,11 +1464,15 @@ function updateRow(tr, a){
   r.when.textContent = fmtDay(a.dataLanc); r.prosp.textContent = (a.prospector || '—') + ' · ' + fmtTime(a.criadoEm);
   r.med.textContent = a.medicaoFiscal || '—'; r.uc.textContent = a.uc || '—'; r.medidor.textContent = a.medidor || '—'; r.leitura.textContent = a.leitura || '—';
   r.alvo.textContent = a.alvo || '—';
+  r.cod.textContent = a.codigo != null ? 'Cód. ' + a.codigo : 'Sem código'; r.cod.title = a.codigo != null ? codeLabel(a.codigo) : '';
   r.obsHint.textContent = a.obs ? (a.obs.length > 70 ? a.obs.slice(0,70) + '…' : a.obs) : '';
   r.fotos.textContent = (a.fotos || []).length;
   r.fotos.title = (a.fotos || []).length + ' foto(s)';
   fillSelect(r.por, adminNames(), tr._dirty ? r.por.value : b.por, 'Selecione');
-  if (!tr._dirty){ r.nota.value = b.nota; r.chk.checked = b.atribuida; r.por.value = b.por; r.equipe.value = b.equipe; }
+  if (!tr._dirty){
+    r.nota.value = b.nota; r.chk.checked = b.atribuida; r.por.value = b.por; r.equipe.value = b.equipe; r.exec.value = b.exec;
+    if (r.negbar){ r.negChk.checked = b.negEnv; r.negRes.value = b.neg; }
+  }
   tr.className = b.atribuida ? 'st-ok' : 'st-pend';
   tr._dirty = isDirty(tr); syncRow(tr);
 }
@@ -1085,7 +1486,9 @@ async function saveRow(tr){
   try {
     const { data, error } = await S.sb.from('gestao').upsert({
       alvo_id:tr._id, nota:d.nota, atribuida:d.atribuida,
-      atribuido_por:d.atribuida ? d.por : '', equipe:d.atribuida ? d.equipe : ''
+      atribuido_por:d.atribuida ? d.por : '', equipe:d.atribuida ? d.equipe : '',
+      codigo_executado:d.exec === '' ? null : Number(d.exec),
+      negociador_enviado:d.negEnv, negociacao:d.negEnv ? d.neg : 'pendente'
     }, { onConflict:'alvo_id' }).select().single();
     if (error) throw error;
     S.gestao.set(tr._id, mapGestao(data));
@@ -1101,7 +1504,7 @@ async function saveRow(tr){
 
 function renderPainelChrome(){
   const base = baseFiltered();
-  const cnt = { todos:base.length, pendente:base.filter(a => statusOk(a,'pendente')).length, atribuida:base.filter(a => statusOk(a,'atribuida')).length, sem_nota:base.filter(a => statusOk(a,'sem_nota')).length };
+  const cnt = Object.fromEntries(STATUS.map(([id]) => [id, base.filter(a => statusOk(a, id)).length]));
   $('#seg').replaceChildren(...STATUS.map(([id,label]) =>
     h('button',{type:'button','aria-pressed':String(S.filters.status===id),onclick:()=>{ S.filters.status = id; S.limit = 100; renderPainel(); }}, h('b',{text:String(cnt[id])}), h('span',{text:label}))));
 }
@@ -1145,13 +1548,16 @@ function csvCell(v, asText){
 $('#btn-csv').addEventListener('click', () => {
   const list = baseFiltered().filter(a => statusOk(a, S.filters.status));
   if (!list.length){ toast('Não há lançamentos para exportar com esses filtros.', true); return; }
-  const head = ['Data do lançamento','Registrado em','Prospector','Instalação fiscal','UC cliente','Medidor cliente','Leitura','Alvo','Observações','Fotos','Nº da nota','Atribuída','Atribuído por','Equipe','Atribuído em'];
+  const head = ['Data do lançamento','Registrado em','Prospector','Instalação fiscal','UC cliente','Medidor cliente','Leitura','Código','Descrição do código','Alvo','Latitude','Longitude','Observações','Fotos','Nº da nota','Atribuída','Atribuído por','Equipe','Atribuído em','Cód. executado','Resultado','Negociador enviado','Negociação'];
   const lines = [head.map(x => csvCell(x)).join(';')];
   for (const a of list){
     const g = S.gestao.get(a.id) || {};
     lines.push([
-      csvCell(fmtDay(a.dataLanc)), csvCell(fmtDate(a.criadoEm)), csvCell(a.prospector), csvCell(a.medicaoFiscal,true), csvCell(a.uc,true), csvCell(a.medidor,true), csvCell(a.leitura,true), csvCell(a.alvo), csvCell(a.obs),
-      csvCell((a.fotos||[]).length), csvCell(g.nota,true), csvCell(g.atribuida ? 'Sim' : 'Não'), csvCell(g.atribuidoPor), csvCell(g.equipe), csvCell(g.atribuidoEm ? fmtDate(g.atribuidoEm) : '')
+      csvCell(fmtDay(a.dataLanc)), csvCell(fmtDate(a.criadoEm)), csvCell(a.prospector), csvCell(a.medicaoFiscal,true), csvCell(a.uc,true), csvCell(a.medidor,true), csvCell(a.leitura,true), csvCell(a.codigo == null ? '' : a.codigo), csvCell(a.codigo == null ? '' : (CODE_MAP.get(a.codigo) || '')), csvCell(a.alvo),
+      csvCell(a.lat == null ? '' : fmtCoord(a.lat)), csvCell(a.lng == null ? '' : fmtCoord(a.lng)), csvCell(a.obs),
+      csvCell((a.fotos||[]).length), csvCell(g.nota,true), csvCell(g.atribuida ? 'Sim' : 'Não'), csvCell(g.atribuidoPor), csvCell(g.equipe), csvCell(g.atribuidoEm ? fmtDate(g.atribuidoEm) : ''),
+      csvCell(g.codExec == null ? '' : g.codExec), csvCell(acertoOf(a) == null ? '' : acertoOf(a) ? 'Acertou' : 'Divergente'),
+      csvCell(a.codigo === CODE_NEGOCIADOR ? (g.negEnv ? 'Sim' : 'Não') : ''), csvCell(a.codigo === CODE_NEGOCIADOR ? NEG_LABEL[g.neg || 'pendente'] : '')
     ].join(';'));
   }
   const d = new Date(), pad = n => String(n).padStart(2,'0');
@@ -1293,13 +1699,18 @@ function openDetail(id, admin){
     h('dl',{class:'kv'},
       kv('Data do lançamento', fmtDay(a.dataLanc)), kv('Registrado em', fmtFull(a.criadoEm)), kv('Lançado por', a.prospector),
       kv('Instalação fiscal', a.medicaoFiscal, true), kv('UC cliente', a.uc, true), kv('Medidor cliente', a.medidor, true), kv('Leitura', a.leitura, true),
+      kv('Código', codeLabel(a.codigo)),
+      [h('dt',{text:'Localização'}), h('dd',{}, a.lat != null ? h('a',{href:gmapsUrl(a.lat, a.lng),target:'_blank',rel:'noopener noreferrer',class:'mono',text:fmtCoord(a.lat) + ', ' + fmtCoord(a.lng)}) : '—')],
       kv('Observações', a.obs))
   ];
   parts.push(h('div',{class:'field'}, h('span',{class:'lbl',text:'Fotos (' + ids.length + ')'}), ids.length ? grid : h('p',{class:'hint',text:'Nenhuma foto anexada.'})));
   if (admin && S.isAdmin){
     parts.push(h('dl',{class:'kv'},
       kv('Nº da nota', g.nota, true), kv('Atribuída', g.atribuida ? 'Sim' : 'Não'),
-      kv('Atribuído por', g.atribuidoPor), kv('Equipe', g.equipe), kv('Atribuído em', g.atribuidoEm ? fmtFull(g.atribuidoEm) : '')));
+      kv('Atribuído por', g.atribuidoPor), kv('Equipe', g.equipe), kv('Atribuído em', g.atribuidoEm ? fmtFull(g.atribuidoEm) : ''),
+      kv('Cód. executado', g.codExec == null ? '' : codeLabel(g.codExec)),
+      kv('Resultado', acertoOf(a) == null ? '' : acertoOf(a) ? 'Acertou' : 'Divergente'),
+      ...(a.codigo === CODE_NEGOCIADOR ? [kv('Negociador enviado', g.negEnv ? 'Sim' : 'Não'), kv('Negociação', NEG_LABEL[g.neg || 'pendente'])] : [])));
     parts.push(h('div',{class:'actions-row'},
       h('button',{class:'btn danger',type:'button',text:'Excluir lançamento',onclick:()=>deleteAlvo(a)}),
       h('button',{class:'btn',type:'button',text:'Fechar',onclick:closeModal})));
