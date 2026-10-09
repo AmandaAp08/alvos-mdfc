@@ -490,15 +490,9 @@ dl.kv dd{margin:0;overflow-wrap:anywhere;white-space:pre-wrap;min-width:0}
       </div>
 
       <div class="field">
-        <label for="f-codigo">Código <span class="req">*</span></label>
+        <label for="f-codigo">Código do alvo <span class="req">*</span></label>
         <select id="f-codigo" aria-describedby="e-codigo"></select>
         <p class="err" id="e-codigo" hidden></p>
-      </div>
-
-      <div class="field">
-        <label for="f-alvo">Alvo <span class="req">*</span></label>
-        <input type="text" id="f-alvo" maxlength="120" autocomplete="off" aria-describedby="e-alvo">
-        <p class="err" id="e-alvo" hidden></p>
       </div>
 
       <div class="field">
@@ -983,13 +977,13 @@ $('#logout').addEventListener('click', async () => {
 });
 
 /* ---------------- FORM: lançar ---------------- */
-const F = { data:$('#f-data'), med:$('#f-med'), uc:$('#f-uc'), medidor:$('#f-medidor'), leitura:$('#f-leitura'), codigo:$('#f-codigo'), loc:$('#f-loc'), alvo:$('#f-alvo'), obs:$('#f-obs'), file:$('#f-file'), submit:$('#f-submit'), progress:$('#f-progress') };
+const F = { data:$('#f-data'), med:$('#f-med'), uc:$('#f-uc'), medidor:$('#f-medidor'), leitura:$('#f-leitura'), codigo:$('#f-codigo'), loc:$('#f-loc'), obs:$('#f-obs'), file:$('#f-file'), submit:$('#f-submit'), progress:$('#f-progress') };
 function resetDate(){ F.data.max = todayStr(); F.data.value = todayStr(); }
 function refreshAs(){ $('#f-as').textContent = S.me ? S.me.usuario : '—'; }
 function updateSubmit(){ F.submit.disabled = !S.sb || !S.me || S.sending; }
 function setErr(key, input, msg){ const p = $('#e-'+key); show(p, true, msg); if (input) input.classList.add('invalid'); }
 function clearErr(key, input){ show($('#e-'+key), false); if (input) input.classList.remove('invalid'); }
-[['data',F.data],['med',F.med],['uc',F.uc],['medidor',F.medidor],['alvo',F.alvo],['leitura',F.leitura]].forEach(([k,el]) => el.addEventListener('input', () => clearErr(k, el)));
+[['data',F.data],['med',F.med],['uc',F.uc],['medidor',F.medidor],['leitura',F.leitura]].forEach(([k,el]) => el.addEventListener('input', () => clearErr(k, el)));
 F.codigo.addEventListener('change', () => clearErr('codigo', F.codigo));
 
 function fillCodeSelects(){
@@ -1104,7 +1098,8 @@ F.file.addEventListener('change', async () => {
 $('#f').addEventListener('submit', async (ev) => {
   ev.preventDefault();
   if (S.sending || !S.sb || !S.me) return;
-  const v = { data_lancamento:F.data.value, medicao_fiscal:F.med.value.trim(), uc:F.uc.value.trim(), medidor:F.medidor.value.trim(), leitura:F.leitura.value.trim(), codigo:F.codigo.value ? Number(F.codigo.value) : null, alvo:F.alvo.value.trim(), obs:F.obs.value.trim() };
+  const v = { data_lancamento:F.data.value, medicao_fiscal:F.med.value.trim(), uc:F.uc.value.trim(), medidor:F.medidor.value.trim(), leitura:F.leitura.value.trim(), codigo:F.codigo.value ? Number(F.codigo.value) : null, obs:F.obs.value.trim() };
+  v.alvo = v.codigo != null ? (CODE_MAP.get(v.codigo) || 'Código ' + v.codigo) : '';
   const loc = readLoc();
   if (loc && !loc.err){ v.latitude = loc.lat; v.longitude = loc.lng; }
   let first = null;
@@ -1116,7 +1111,6 @@ $('#f').addEventListener('submit', async (ev) => {
   chk(v.medidor, 'medidor', F.medidor, 'Informe o medidor do cliente.');
   chk(v.leitura, 'leitura', F.leitura, 'Informe a leitura.');
   chk(v.codigo != null, 'codigo', F.codigo, 'Selecione o código.');
-  chk(v.alvo, 'alvo', F.alvo, 'Informe o alvo.');
   chk(loc && !loc.err, 'loc', F.loc, loc && loc.err ? loc.err : 'Informe a localização do alvo (use o botão ou cole latitude e longitude).');
   if (first){ first.focus(); return; }
 
@@ -1135,7 +1129,7 @@ $('#f').addEventListener('submit', async (ev) => {
     F.progress.textContent = 'Salvando lançamento…';
     const { error } = await S.sb.from('alvos').insert(Object.assign({ id, fotos:uploaded }, v));
     if (error) throw error;
-    F.med.value = F.uc.value = F.medidor.value = F.leitura.value = F.alvo.value = F.obs.value = F.loc.value = ''; F.codigo.value = ''; show($('#f-loc-h'), false); resetDate();
+    F.med.value = F.uc.value = F.medidor.value = F.leitura.value = F.obs.value = F.loc.value = ''; F.codigo.value = ''; show($('#f-loc-h'), false); resetDate();
     revoke(S.photos); S.photos = []; renderPhotos(); show($('#f-uc-h'), false);
     toast('Alvo lançado com sucesso.');
     window.scrollTo({top:0, behavior:'smooth'});
