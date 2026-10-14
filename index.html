@@ -739,7 +739,7 @@ const CFG = window.ALVOS_CONFIG || {};
 
 /* ---------------- códigos de irregularidade ---------------- */
 const CODES = [
-  [109,'Circuito potencial interrompido'],[115,'Medidor avariado'],[129,'Medidor sem alimentação / neutro'],[154,'Ligação clandestina'],
+  [1,'Medição normal'],[109,'Circuito potencial interrompido'],[115,'Medidor avariado'],[129,'Medidor sem alimentação / neutro'],[154,'Ligação clandestina'],
   [164,'Desvio embutido'],[165,'Desvio antes da medição'],[168,'Ponte no bloco de terminais'],[171,'Ligado à revelia com contrato inativo'],
   [172,'Ligação invertida'],[174,'Medidor inclinado / deitado'],[175,'Regularização de lig. DS clandestino'],[176,'Regularização de lig. CR de novo contrato'],
   [188,'Medidor com imã acoplado'],[201,'Medidor com defeito'],[202,'Ligação executada com erro'],[203,'Ligação direta serv. emerg. plantão'],
@@ -752,7 +752,8 @@ const CODES = [
 ];
 const CODE_MAP = new Map(CODES);
 const CODE_NEGOCIADOR = 171;
-const codeLabel = c => c == null ? '—' : c + ' · ' + (CODE_MAP.get(c) || 'Código não listado');
+const pad3 = c => String(c).padStart(3, '0');
+const codeLabel = c => c == null ? '—' : pad3(c) + ' · ' + (CODE_MAP.get(c) || 'Código não listado');
 const gmapsUrl = (lat, lng) => 'https://www.google.com/maps?q=' + lat + ',' + lng;
 const fmtCoord = n => (Math.round(n * 1e6) / 1e6).toFixed(6);
 const NEG_LABEL = { pendente:'Pendente', negociado:'Negociado', nao_negociado:'Não negociado' };
@@ -987,7 +988,7 @@ function clearErr(key, input){ show($('#e-'+key), false); if (input) input.class
 F.codigo.addEventListener('change', () => clearErr('codigo', F.codigo));
 
 function fillCodeSelects(){
-  const opts = ph => [h('option',{value:'',text:ph}), ...CODES.map(([c,d]) => h('option',{value:String(c),text:c + ' · ' + d}))];
+  const opts = ph => [h('option',{value:'',text:ph}), ...CODES.map(([c,d]) => h('option',{value:String(c),text:pad3(c) + ' · ' + d}))];
   F.codigo.replaceChildren(...opts('Selecione o código'));
   $('#fl-cod').replaceChildren(...opts('Todos'));
   $('#as-fcod').replaceChildren(...opts('Todos'));
@@ -1160,7 +1161,7 @@ function renderMeus(){
         h('span',{class:'mono',text:'UC '+(a.uc||'—')}),
         h('span',{class:'mono',text:'Medidor '+(a.medidor||'—')}),
         h('span',{class:'mono',text:'Leitura '+(a.leitura||'—')}),
-        h('span',{class:'mono',text:'Cód. '+(a.codigo == null ? '—' : a.codigo)}),
+        h('span',{class:'mono',text:'Cód. '+(a.codigo == null ? '—' : pad3(a.codigo))}),
         h('span',{text:(a.fotos||[]).length + ' foto(s)'}))))));
 }
 
@@ -1179,7 +1180,7 @@ function baseFiltered(){
     if (since && (a.dataLanc || '') < since) return false;
     if (f.prosp && a.prospector !== f.prosp) return false;
     if (f.cod && String(a.codigo) !== f.cod) return false;
-    if (q && !norm([fmtDay(a.dataLanc),a.medicaoFiscal,a.uc,a.medidor,a.leitura,a.codigo,g.codExec,a.alvo,a.prospector,a.obs,g.nota,g.equipe,g.atribuidoPor].join(' ')).includes(q)) return false;
+    if (q && !norm([fmtDay(a.dataLanc),a.medicaoFiscal,a.uc,a.medidor,a.leitura,a.codigo == null ? '' : pad3(a.codigo),g.codExec == null ? '' : pad3(g.codExec),a.alvo,a.prospector,a.obs,g.nota,g.equipe,g.atribuidoPor].join(' ')).includes(q)) return false;
     return true;
   });
 }
@@ -1319,9 +1320,9 @@ function renderMapa(){
   mapLayer.clearLayers();
   const pts = [];
   for (const a of withLoc){
-    const st = alvoStatus(a), label = (st === 'executado' ? '✓ ' : '') + (a.codigo == null ? '?' : Number(a.codigo));
+    const st = alvoStatus(a), label = (st === 'executado' ? '✓ ' : '') + (a.codigo == null ? '?' : pad3(a.codigo));
     const ic = L.divIcon({ className:'pinwrap', html:'<span class="pin st-' + st + '">' + label + '</span>', iconSize:[46, 26], iconAnchor:[23, 13], popupAnchor:[0, -14] });
-    L.marker([a.lat, a.lng], { icon:ic, title:'Cód. ' + a.codigo + ' · UC ' + a.uc, riseOnHover:true }).bindPopup(() => popupFor(a), { maxWidth:320 }).addTo(mapLayer);
+    L.marker([a.lat, a.lng], { icon:ic, title:'Cód. ' + pad3(a.codigo) + ' · UC ' + a.uc, riseOnHover:true }).bindPopup(() => popupFor(a), { maxWidth:320 }).addTo(mapLayer);
     pts.push([a.lat, a.lng]);
   }
   const sig = JSON.stringify(S.mapa);
@@ -1401,7 +1402,7 @@ function buildRow(a){
   r.por = h('select',{id:'p-'+a.id,'aria-label':'Atribuído por'}); td('Atribuído por','adm').append(r.por);
   r.equipe = h('input',{type:'text',class:'eqinput',id:'e-'+a.id,'aria-label':'Equipe atribuída',list:'dl-equipes',maxlength:'60',placeholder:'Digite a equipe',autocomplete:'off'}); td('Equipe','adm').append(r.equipe);
   r.save = h('button',{class:'btn primary sm save',type:'button',text:'Salvar',onclick:()=>saveRow(tr)});
-  r.exec = h('select',{class:'exec',id:'x-'+a.id,'aria-label':'Código executado pela equipe'}, h('option',{value:'',text:'Selecione'}), ...CODES.map(([c,d]) => h('option',{value:String(c),text:c + ' · ' + d})));
+  r.exec = h('select',{class:'exec',id:'x-'+a.id,'aria-label':'Código executado pela equipe'}, h('option',{value:'',text:'Selecione'}), ...CODES.map(([c,d]) => h('option',{value:String(c),text:pad3(c) + ' · ' + d})));
   r.acerto = h('div',{class:'acerto'});
   const cx = h('div',{class:'cellbox'}, r.exec, r.acerto); td('Cód. executado','adm').append(cx);
   if (a.codigo === CODE_NEGOCIADOR){
@@ -1448,7 +1449,7 @@ function syncRow(tr){
   r.sw.classList.toggle('on', on); r.chkTxt.textContent = on ? 'Sim' : 'Não';
   const a = S.alvoMap.get(tr._id), ex = r.exec.value;
   if (!ex) r.acerto.replaceChildren('Aguardando execução');
-  else if (a && a.codigo != null){ const ok = Number(ex) === a.codigo; r.acerto.replaceChildren(h('span',{class:'pill ' + (ok ? 'ok' : 'warn')}, icon(ok ? 'i-ok' : 'i-warn', 14), ok ? 'Acertou' : 'Divergente (apontou ' + a.codigo + ')')); }
+  else if (a && a.codigo != null){ const ok = Number(ex) === a.codigo; r.acerto.replaceChildren(h('span',{class:'pill ' + (ok ? 'ok' : 'warn')}, icon(ok ? 'i-ok' : 'i-warn', 14), ok ? 'Acertou' : 'Divergente (apontou ' + pad3(a.codigo) + ')')); }
   else r.acerto.replaceChildren('Alvo sem código apontado');
   if (r.negbar){ r.negTxt.textContent = r.negChk.checked ? 'Enviado' : 'Não enviado'; r.negSw.classList.toggle('on', r.negChk.checked); r.negRes.disabled = !r.negChk.checked; }
   r.save.disabled = !tr._dirty;
@@ -1458,7 +1459,7 @@ function updateRow(tr, a){
   r.when.textContent = fmtDay(a.dataLanc); r.prosp.textContent = (a.prospector || '—') + ' · ' + fmtTime(a.criadoEm);
   r.med.textContent = a.medicaoFiscal || '—'; r.uc.textContent = a.uc || '—'; r.medidor.textContent = a.medidor || '—'; r.leitura.textContent = a.leitura || '—';
   r.alvo.textContent = a.alvo || '—';
-  r.cod.textContent = a.codigo != null ? 'Cód. ' + a.codigo : 'Sem código'; r.cod.title = a.codigo != null ? codeLabel(a.codigo) : '';
+  r.cod.textContent = a.codigo != null ? 'Cód. ' + pad3(a.codigo) : 'Sem código'; r.cod.title = a.codigo != null ? codeLabel(a.codigo) : '';
   r.obsHint.textContent = a.obs ? (a.obs.length > 70 ? a.obs.slice(0,70) + '…' : a.obs) : '';
   r.fotos.textContent = (a.fotos || []).length;
   r.fotos.title = (a.fotos || []).length + ' foto(s)';
@@ -1547,10 +1548,10 @@ $('#btn-csv').addEventListener('click', () => {
   for (const a of list){
     const g = S.gestao.get(a.id) || {};
     lines.push([
-      csvCell(fmtDay(a.dataLanc)), csvCell(fmtDate(a.criadoEm)), csvCell(a.prospector), csvCell(a.medicaoFiscal,true), csvCell(a.uc,true), csvCell(a.medidor,true), csvCell(a.leitura,true), csvCell(a.codigo == null ? '' : a.codigo), csvCell(a.codigo == null ? '' : (CODE_MAP.get(a.codigo) || '')), csvCell(a.alvo),
+      csvCell(fmtDay(a.dataLanc)), csvCell(fmtDate(a.criadoEm)), csvCell(a.prospector), csvCell(a.medicaoFiscal,true), csvCell(a.uc,true), csvCell(a.medidor,true), csvCell(a.leitura,true), csvCell(a.codigo == null ? '' : pad3(a.codigo), true), csvCell(a.codigo == null ? '' : (CODE_MAP.get(a.codigo) || '')), csvCell(a.alvo),
       csvCell(a.lat == null ? '' : fmtCoord(a.lat)), csvCell(a.lng == null ? '' : fmtCoord(a.lng)), csvCell(a.obs),
       csvCell((a.fotos||[]).length), csvCell(g.nota,true), csvCell(g.atribuida ? 'Sim' : 'Não'), csvCell(g.atribuidoPor), csvCell(g.equipe), csvCell(g.atribuidoEm ? fmtDate(g.atribuidoEm) : ''),
-      csvCell(g.codExec == null ? '' : g.codExec), csvCell(acertoOf(a) == null ? '' : acertoOf(a) ? 'Acertou' : 'Divergente'),
+      csvCell(g.codExec == null ? '' : pad3(g.codExec), true), csvCell(acertoOf(a) == null ? '' : acertoOf(a) ? 'Acertou' : 'Divergente'),
       csvCell(a.codigo === CODE_NEGOCIADOR ? (g.negEnv ? 'Sim' : 'Não') : ''), csvCell(a.codigo === CODE_NEGOCIADOR ? NEG_LABEL[g.neg || 'pendente'] : '')
     ].join(';'));
   }
