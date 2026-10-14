@@ -224,6 +224,25 @@ td select.exec{width:100%;min-width:150px;max-width:230px}
 .rk-row.muted .rk-name,.rk-row.muted .rk-count{color:var(--muted);font-weight:500}
 .rk-row .rk-none{display:flex;align-items:center;height:100%;padding:0 10px;color:var(--muted);font-size:12.5px}
 .dvlist{display:grid;gap:6px;margin-top:8px}
+.swipe{display:none;margin-top:14px}
+@media (max-width:899px){.swipe{display:block}}
+.rkwrap{margin-top:16px;overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table.rkt{width:100%;border-collapse:collapse;min-width:640px}
+.rkt th{font-family:var(--f-display);font-weight:600;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:right;padding:10px 12px;border-bottom:1px solid var(--line-strong);white-space:nowrap}
+.rkt td{padding:10px 12px;text-align:right;font-variant-numeric:tabular-nums;font-size:14px;border-bottom:1px solid var(--line);white-space:nowrap}
+.rkt tr:last-child td{border-bottom:0}
+.rkt th:nth-child(1),.rkt td:nth-child(1){text-align:right;width:34px;padding-right:4px;font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.rkt th:nth-child(2),.rkt td:nth-child(2){text-align:left;font-weight:600;position:sticky;left:0;background:var(--surface)}
+.rkt th:nth-child(2){background:var(--surface)}
+.rkt th.on,.rkt td.on{color:var(--ink)}
+.rkt td.on{font-weight:700;background:color-mix(in srgb,var(--accent) 9%,transparent)}
+.rkt th.on{box-shadow:inset 0 -2px 0 var(--accent)}
+.rkt td.dim{color:var(--muted)}
+.rkt tr.zero td{background:color-mix(in srgb,var(--warn-bg) 55%,transparent)}
+.rkt tr.zero td:nth-child(2){background:var(--warn-bg)}
+.rkt .mini{display:inline-block;vertical-align:middle;width:54px;height:8px;margin-right:8px;border-radius:4px;background:var(--surface-3);position:relative;overflow:hidden}
+.rkt .mini i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:4px}
+.rkt .sub2{display:block;font-size:11.5px;color:var(--muted);font-weight:400}
 .dv{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;text-align:left;width:100%;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:14px}
 .dv:hover{border-color:var(--accent)}
 .dv .mono{font-size:13px}
@@ -259,19 +278,19 @@ i.pin{min-width:16px;width:16px;height:16px;padding:0;border-width:2px}
   .rk-row .rk-count.wide{flex:0 0 auto}
 }
 .tablewrap{margin-top:16px;overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}
-table{border-collapse:collapse;width:100%;min-width:1420px;font-size:14px}
-thead th{font-family:var(--f-display);font-weight:600;font-size:14px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);text-align:left;padding:9px 12px;background:var(--surface-2);border-bottom:1px solid var(--line);white-space:nowrap}
-thead tr.grp th{font-size:15px;color:var(--ink);letter-spacing:.09em;padding-block:10px;border-bottom:1px solid var(--line-strong)}
-thead tr.grp th.adm{background:var(--accent-soft);border-left:1px solid var(--line-strong)}
-thead th.adm2{border-left:0}
-tbody tr{transition:background .12s}
-tbody tr:hover{background:var(--surface-2)}
-tbody td{padding:10px 10px;border-bottom:1px solid var(--line);vertical-align:top}
-tbody tr:last-child td{border-bottom:0}
-tbody td.adm{background:color-mix(in srgb,var(--accent-soft) 35%,transparent)}
-tbody td.adm.first{border-left:1px solid var(--line-strong)}
-tr.st-ok td:first-child{box-shadow:inset 4px 0 0 var(--ok)}
-tr.st-pend td:first-child{box-shadow:inset 4px 0 0 var(--warn)}
+.tablewrap table{border-collapse:collapse;width:100%;min-width:1420px;font-size:14px}
+.tablewrap thead th{font-family:var(--f-display);font-weight:600;font-size:14px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);text-align:left;padding:9px 12px;background:var(--surface-2);border-bottom:1px solid var(--line);white-space:nowrap}
+.tablewrap thead tr.grp th{font-size:15px;color:var(--ink);letter-spacing:.09em;padding-block:10px;border-bottom:1px solid var(--line-strong)}
+.tablewrap thead tr.grp th.adm{background:var(--accent-soft);border-left:1px solid var(--line-strong)}
+.tablewrap thead th.adm2{border-left:0}
+.tablewrap tbody tr{transition:background .12s}
+.tablewrap tbody tr:hover{background:var(--surface-2)}
+.tablewrap tbody td{padding:10px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.tablewrap tbody tr:last-child td{border-bottom:0}
+.tablewrap tbody td.adm{background:color-mix(in srgb,var(--accent-soft) 35%,transparent)}
+.tablewrap tbody td.adm.first{border-left:1px solid var(--line-strong)}
+.tablewrap tr.st-ok td:first-child{box-shadow:inset 4px 0 0 var(--ok)}
+.tablewrap tr.st-pend td:first-child{box-shadow:inset 4px 0 0 var(--warn)}
 td .when{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
 td .sub{color:var(--muted);font-size:13px}
 td .two{display:grid;gap:2px;font-family:var(--f-mono);font-weight:500;font-size:13px}
@@ -291,33 +310,33 @@ td .eqinput{min-width:140px}
 .pill{display:inline-flex;align-items:center;gap:5px;height:24px;padding:0 9px;border-radius:999px;font-size:12px;font-weight:600;background:var(--surface-2);color:var(--muted)}
 .more{display:flex;justify-content:center;margin-top:16px}
 @media (min-width:900px){
-  tbody td:nth-child(1){min-width:124px}
-  tbody td:nth-child(2){min-width:118px}
-  tbody td:nth-child(3){min-width:132px}
-  tbody td:nth-child(4){min-width:180px}
-  tbody td:nth-child(5){min-width:126px}
-  tbody td:nth-child(6){min-width:84px}
-  tbody td:nth-child(7),tbody td:nth-child(8){min-width:148px}
-  tbody td:nth-child(9){min-width:210px}
-  tbody td:nth-child(10){min-width:100px}
+  .tablewrap tbody td:nth-child(1){min-width:124px}
+  .tablewrap tbody td:nth-child(2){min-width:118px}
+  .tablewrap tbody td:nth-child(3){min-width:132px}
+  .tablewrap tbody td:nth-child(4){min-width:180px}
+  .tablewrap tbody td:nth-child(5){min-width:126px}
+  .tablewrap tbody td:nth-child(6){min-width:84px}
+  .tablewrap tbody td:nth-child(7),.tablewrap tbody td:nth-child(8){min-width:148px}
+  .tablewrap tbody td:nth-child(9){min-width:210px}
+  .tablewrap tbody td:nth-child(10){min-width:100px}
 }
 @media (max-width:899px){
   .tablewrap{overflow:visible;border:0;background:transparent;border-radius:0}
-  table,tbody,tr,td{display:block;width:100%}
-  table{min-width:0}
-  thead{display:none}
-  tbody tr{background:var(--surface);border:1px solid var(--line);border-radius:12px;margin-bottom:12px;padding:6px 0;overflow:hidden}
-  tbody tr.st-ok{border-left:5px solid var(--ok)}
-  tbody tr.st-pend{border-left:5px solid var(--warn)}
-  tr.st-ok td:first-child,tr.st-pend td:first-child{box-shadow:none}
-  tbody td{display:grid;grid-template-columns:120px minmax(0,1fr);gap:10px;align-items:center;border:0;padding:7px 14px}
-  tbody td::before{content:attr(data-label);font-family:var(--f-display);font-weight:600;font-size:14px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
-  tbody td.adm,tbody td.adm.first{background:none;border-left:0}
-  tbody td.adm.first{border-top:1px dashed var(--line-strong);margin-top:6px;padding-top:12px}
-  td .nota{width:100%}
-  td select,td .eqinput{min-width:0}
-  tbody td.actions{grid-template-columns:1fr}
-  tbody td.actions::before{display:none}
+  .tablewrap table,.tablewrap tbody,.tablewrap tr,.tablewrap td{display:block;width:100%}
+  .tablewrap table{min-width:0}
+  .tablewrap thead{display:none}
+  .tablewrap tbody tr{background:var(--surface);border:1px solid var(--line);border-radius:12px;margin-bottom:12px;padding:6px 0;overflow:hidden}
+  .tablewrap tbody tr.st-ok{border-left:5px solid var(--ok)}
+  .tablewrap tbody tr.st-pend{border-left:5px solid var(--warn)}
+  .tablewrap tr.st-ok td:first-child,.tablewrap tr.st-pend td:first-child{box-shadow:none}
+  .tablewrap tbody td{display:grid;grid-template-columns:120px minmax(0,1fr);gap:10px;align-items:center;border:0;padding:7px 14px}
+  .tablewrap tbody td::before{content:attr(data-label);font-family:var(--f-display);font-weight:600;font-size:14px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+  .tablewrap tbody td.adm,.tablewrap tbody td.adm.first{background:none;border-left:0}
+  .tablewrap tbody td.adm.first{border-top:1px dashed var(--line-strong);margin-top:6px;padding-top:12px}
+  .tablewrap td .nota{width:100%}
+  .tablewrap td select,.tablewrap td .eqinput{min-width:0}
+  .tablewrap tbody td.actions{grid-template-columns:1fr}
+  .tablewrap tbody td.actions::before{display:none}
   .acts{grid-template-columns:1fr 1fr}
 }
 
@@ -641,8 +660,8 @@ dl.kv dd{margin:0;overflow-wrap:anywhere;white-space:pre-wrap;min-width:0}
 
   <!-- ============ ADMIN: ranking ============ -->
   <section id="v-ranking" hidden>
-    <h1 class="view-title">Ranking de envios</h1>
-    <p class="lede">Quantos alvos cada prospector já lançou. Veja quem está mandando mais e quem ainda não lançou nenhum.</p>
+    <h1 class="view-title">Ranking de prospectores</h1>
+    <p class="lede">Compare quanto cada prospector lançou, quanto a equipe já executou e quantos códigos ele acertou. Escolha abaixo pelo que ordenar.</p>
 
     <div class="bar">
       <div class="field"><label for="rk-periodo">Período</label>
@@ -653,12 +672,22 @@ dl.kv dd{margin:0;overflow-wrap:anywhere;white-space:pre-wrap;min-width:0}
           <option value="30">Últimos 30 dias</option>
         </select>
       </div>
+      <div class="field"><label for="rk-ordem">Ordenar por</label>
+        <select id="rk-ordem">
+          <option value="lan">Mais lançados</option>
+          <option value="exe">Mais executados</option>
+          <option value="aprov">Maior aproveitamento (acertos ÷ lançados)</option>
+          <option value="acerto">Maior % de acerto (acertos ÷ executados)</option>
+        </select>
+      </div>
     </div>
 
     <div class="kpis" id="rk-kpis"></div>
 
     <div id="rk-status" class="skeleton" role="status">Carregando lançamentos…</div>
-    <div class="ranklist" id="rk-list" hidden></div>
+    <p class="hint swipe">Arraste a tabela para o lado para ver todas as colunas.</p>
+    <div class="rkwrap" id="rk-list" hidden></div>
+    <p class="hint" id="rk-legend" hidden><b>Lançados</b>: alvos enviados pelo prospector. <b>Executados</b>: alvos em que você já preencheu o Cód. executado. <b>Acertos</b>: executados em que o código do prospector é igual ao da equipe. <b>% de acerto</b> = acertos ÷ executados com código. <b>Aproveitamento</b> = acertos ÷ lançados (quem lançou muito e ainda tem pouco executado fica mais baixo).</p>
   </section>
 
   <!-- ============ ADMIN: cadastros ============ -->
@@ -786,7 +815,7 @@ const S = {
   loginKind:'campo', loginCache:{}, fails:0, lockUntil:0,
   view:'home', mode:null, limit:100,
   filters:{q:'', status:'todos', prosp:'', periodo:'todos', cod:''},
-  rankPeriodo:'todos',
+  rankPeriodo:'todos', rankOrdem:'lan',
   assert:{ periodo:'todos', prosp:'', cod:'' },
   mapa:{ periodo:'todos', prosp:'', cod:'', status:'' },
   photos:[], sending:false
@@ -1337,48 +1366,72 @@ function renderMapa(){
 
 /* ---------------- RANKING ---------------- */
 $('#rk-periodo').addEventListener('change', e => { S.rankPeriodo = e.target.value; renderRanking(); });
+$('#rk-ordem').addEventListener('change', e => { S.rankOrdem = e.target.value; renderRanking(); });
 function renderRanking(){
   if (!S.isAdmin) return;
-  const st = $('#rk-status'), list = $('#rk-list');
-  if (!S.loaded || !S.usersLoaded){ st.className = 'skeleton'; show(st, true, 'Carregando lançamentos…'); list.hidden = true; return; }
+  const st = $('#rk-status'), list = $('#rk-list'), leg = $('#rk-legend');
+  if (!S.loaded || !S.usersLoaded){ st.className = 'skeleton'; show(st, true, 'Carregando lançamentos…'); list.hidden = true; leg.hidden = true; return; }
   const since = periodoSince(S.rankPeriodo);
   const alvosNoPeriodo = since ? S.alvos.filter(a => (a.dataLanc || '') >= since) : S.alvos;
-  const counts = new Map();
-  for (const nome of S.users.prospector) counts.set(nome, 0);
+  const by = new Map();
+  const get = nome => { if (!by.has(nome)) by.set(nome, { nome, lan:0, exe:0, aval:0, ok:0 }); return by.get(nome); };
+  for (const nome of S.users.prospector) get(nome);
   for (const a of alvosNoPeriodo){
     if (!a.prospector) continue;
-    counts.set(a.prospector, (counts.get(a.prospector) || 0) + 1);
+    const g = get(a.prospector), x = S.gestao.get(a.id) || {};
+    g.lan++;
+    if (x.codExec != null) g.exe++;
+    const ac = acertoOf(a);
+    if (ac != null){ g.aval++; if (ac) g.ok++; }
   }
-  const rows2 = Array.from(counts, ([nome, cnt]) => ({ nome, cnt })).sort((a, b) => b.cnt - a.cnt || a.nome.localeCompare(b.nome, 'pt-BR'));
+  const rows2 = Array.from(by.values());
+  for (const r of rows2){ r.acerto = pct(r.ok, r.aval); r.aprov = pct(r.ok, r.lan); }
+  const key = S.rankOrdem;
+  const val = r => key === 'lan' ? r.lan : key === 'exe' ? r.exe : key === 'aprov' ? r.aprov : r.acerto;
+  rows2.sort((a, b) => {
+    const va = val(a), vb = val(b);
+    if ((va == null) !== (vb == null)) return va == null ? 1 : -1;
+    return ((vb || 0) - (va || 0)) || (b.lan - a.lan) || (b.exe - a.exe) || a.nome.localeCompare(b.nome, 'pt-BR');
+  });
   const total = rows2.length;
-  const comEnvio = rows2.filter(r => r.cnt > 0).length;
+  const comEnvio = rows2.filter(r => r.lan > 0).length;
   const semEnvio = total - comEnvio;
-
+  const sum = f => rows2.reduce((t, r) => t + r[f], 0);
+  const gAval = sum('aval'), gOk = sum('ok'), gAc = pct(gOk, gAval);
+  const kpi = (lbl, v, cls) => h('div',{class:'kpi' + (cls ? ' ' + cls : '')}, h('span',{class:'kpi-lbl',text:lbl}), h('span',{class:'kpi-val',text:String(v)}));
   $('#rk-kpis').replaceChildren(
-    h('div',{class:'kpi'}, h('span',{class:'kpi-lbl',text:'Prospectores cadastrados'}), h('span',{class:'kpi-val',text:String(total)})),
-    h('div',{class:'kpi ok'}, h('span',{class:'kpi-lbl',text:'Enviando alvos'}), h('span',{class:'kpi-val',text:String(comEnvio)})),
-    h('div',{class:'kpi'+(semEnvio ? ' warn' : '')}, h('span',{class:'kpi-lbl',text:'Sem nenhum envio'}), h('span',{class:'kpi-val',text:String(semEnvio)}))
+    kpi('Prospectores cadastrados', total),
+    kpi('Alvos lançados', sum('lan')),
+    kpi('Alvos executados', sum('exe')),
+    kpi('Acerto geral', gAc == null ? '—' : gAc + '%', 'ok'),
+    kpi('Sem nenhum envio', semEnvio, semEnvio ? 'warn' : '')
   );
 
   if (!total){
     st.className = 'empty'; show(st, true); st.replaceChildren(h('b',{text:'Nenhum prospector cadastrado'}), 'Cadastre prospectores na aba Cadastros.');
-    list.hidden = true;
+    list.hidden = true; leg.hidden = true;
     return;
   }
-  st.hidden = true; list.hidden = false;
-  const max = Math.max(1, rows2[0].cnt);
-  list.replaceChildren(...rows2.map((r, i) => {
-    const isZero = r.cnt === 0;
-    const pct = Math.max(3, Math.round((r.cnt / max) * 100));
-    return h('div',{class:'rk-row'+(isZero ? ' zero' : ''), tabindex:'0', title:r.nome+': '+r.cnt+' alvo(s)'+(since ? ' no período selecionado' : '')},
-      h('span',{class:'rk-pos',text:String(i+1)}),
-      h('span',{class:'rk-name',text:r.nome}),
-      isZero
-        ? h('div',{class:'rk-track'}, h('span',{class:'rk-empty'}, icon('i-warn',14), 'Nenhum alvo lançado'))
-        : h('div',{class:'rk-track'}, h('div',{class:'rk-fill',style:'width:'+pct+'%'})),
-      h('span',{class:'rk-count',text:String(r.cnt)})
-    );
+  st.hidden = true; list.hidden = false; leg.hidden = false;
+  const maxLan = Math.max(1, ...rows2.map(r => r.lan));
+  const th = (txt, k) => h('th',{class:key === k ? 'on' : '', scope:'col', text:txt});
+  const pc = v => v == null ? '—' : v + '%';
+  const head = h('thead', {}, h('tr', {}, h('th',{text:''}), h('th',{scope:'col',style:'text-align:left',text:'Prospector'}),
+    th('Lançados','lan'), th('Executados','exe'), h('th',{scope:'col',text:'Acertos'}), th('% de acerto','acerto'), th('Aproveitamento','aprov')));
+  const body = h('tbody', {}, ...rows2.map((r, i) => {
+    const zero = r.lan === 0;
+    const tip = r.nome + ': ' + r.lan + ' lançado(s), ' + r.exe + ' executado(s), ' + r.ok + ' acerto(s) em ' + r.aval + ' avaliado(s)' + (since ? ' no período selecionado' : '');
+    return h('tr',{class:zero ? 'zero' : '', title:tip},
+      h('td',{text:String(i + 1)}),
+      h('td',{text:r.nome}),
+      h('td',{class:key === 'lan' ? 'on' : ''}, zero ? h('span',{class:'rk-empty',style:'display:inline-flex;height:auto;padding:0'}, icon('i-warn',14), 'Nenhum') : h('span',{}, h('span',{class:'mini'}, h('i',{style:'width:' + Math.max(6, Math.round(r.lan * 100 / maxLan)) + '%'})), String(r.lan))),
+      h('td',{class:key === 'exe' ? 'on' : (zero ? 'dim' : '')},
+        zero ? '—' : String(r.exe), zero ? null : h('span',{class:'sub2',text:pc(pct(r.exe, r.lan)) + ' dos lançados'})),
+      h('td',{class:zero ? 'dim' : ''}, zero ? '—' : r.ok + '/' + r.aval),
+      h('td',{class:key === 'acerto' ? 'on' : 'dim'}, pc(r.acerto)),
+      h('td',{class:key === 'aprov' ? 'on' : 'dim'}, pc(r.aprov)));
   }));
+  list.replaceChildren(h('table',{class:'rkt'}, head, body));
 }
 
 const rows = new Map();
