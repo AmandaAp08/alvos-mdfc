@@ -1349,7 +1349,7 @@ function renderMapa(){
     mapLayer = L.layerGroup().addTo(mapObj);
   }
   mapObj.invalidateSize();
-  const list = filterBy(S.mapa), withLoc = list.filter(a => a.lat != null && a.lng != null);
+  const list = filterBy(S.mapa).filter(a => !fsOf(a)), withLoc = list.filter(a => a.lat != null && a.lng != null);
   mapLayer.clearLayers();
   const pts = [];
   for (const a of withLoc){
