@@ -214,6 +214,10 @@ input:disabled,select:disabled{opacity:.5;cursor:not-allowed}
 .pill.warn{background:var(--warn-bg);color:var(--warn)}
 td select.exec{width:100%;min-width:150px;max-width:230px}
 .acerto{margin-top:6px;min-height:24px;font-size:12.5px;color:var(--muted)}
+.fsbar{margin-top:6px}
+.fsbar .sw{min-height:28px;font-size:13px;font-weight:600;color:var(--muted);gap:6px}
+.fsbar .sw input{width:18px;height:18px;accent-color:var(--muted)}
+.fsbar .sw.on{color:var(--ink)}
 .negbar{margin-top:8px;padding:8px 10px;border:1.5px dashed var(--warn);border-radius:8px;background:var(--warn-bg);display:grid;gap:6px}
 .negbar b{font-family:var(--f-display);font-weight:600;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--warn)}
 .negbar select{min-width:0;width:100%}
@@ -291,6 +295,7 @@ i.pin{min-width:16px;width:16px;height:16px;padding:0;border-width:2px}
 .tablewrap tbody td.adm.first{border-left:1px solid var(--line-strong)}
 .tablewrap tr.st-ok td:first-child{box-shadow:inset 4px 0 0 var(--ok)}
 .tablewrap tr.st-pend td:first-child{box-shadow:inset 4px 0 0 var(--warn)}
+.tablewrap tr.st-fs td:first-child{box-shadow:inset 4px 0 0 var(--muted)}
 td .when{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
 td .sub{color:var(--muted);font-size:13px}
 td .two{display:grid;gap:2px;font-family:var(--f-mono);font-weight:500;font-size:13px}
@@ -328,7 +333,8 @@ td .eqinput{min-width:140px}
   .tablewrap tbody tr{background:var(--surface);border:1px solid var(--line);border-radius:12px;margin-bottom:12px;padding:6px 0;overflow:hidden}
   .tablewrap tbody tr.st-ok{border-left:5px solid var(--ok)}
   .tablewrap tbody tr.st-pend{border-left:5px solid var(--warn)}
-  .tablewrap tr.st-ok td:first-child,.tablewrap tr.st-pend td:first-child{box-shadow:none}
+  .tablewrap tbody tr.st-fs{border-left:5px solid var(--muted)}
+  .tablewrap tr.st-ok td:first-child,.tablewrap tr.st-pend td:first-child,.tablewrap tr.st-fs td:first-child{box-shadow:none}
   .tablewrap tbody td{display:grid;grid-template-columns:120px minmax(0,1fr);gap:10px;align-items:center;border:0;padding:7px 14px}
   .tablewrap tbody td::before{content:attr(data-label);font-family:var(--f-display);font-weight:600;font-size:14px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
   .tablewrap tbody td.adm,.tablewrap tbody td.adm.first{background:none;border-left:0}
@@ -912,7 +918,7 @@ async function init(){
 
 /* ---------------- dados ---------------- */
 const mapAlvo = r => ({ id:r.id, criadoEm:Date.parse(r.criado_em), dataLanc:r.data_lancamento || '', uid:r.autor_id, prospector:r.prospector, medicaoFiscal:r.medicao_fiscal, uc:r.uc, medidor:r.medidor, leitura:r.leitura || '', codigo:r.codigo == null ? null : Number(r.codigo), lat:r.latitude == null ? null : Number(r.latitude), lng:r.longitude == null ? null : Number(r.longitude), alvo:r.alvo, obs:r.obs || '', fotos:r.fotos || [] });
-const mapGestao = g => ({ nota:g.nota || '', atribuida:!!g.atribuida, atribuidoPor:g.atribuido_por || '', equipe:g.equipe || '', atribuidoEm:g.atribuido_em ? Date.parse(g.atribuido_em) : null, atualizadoPor:g.atualizado_por || '', codExec:g.codigo_executado == null ? null : Number(g.codigo_executado), negEnv:!!g.negociador_enviado, neg:g.negociacao || 'pendente' });
+const mapGestao = g => ({ nota:g.nota || '', atribuida:!!g.atribuida, atribuidoPor:g.atribuido_por || '', equipe:g.equipe || '', atribuidoEm:g.atribuido_em ? Date.parse(g.atribuido_em) : null, atualizadoPor:g.atualizado_por || '', codExec:g.codigo_executado == null ? null : Number(g.codigo_executado), negEnv:!!g.negociador_enviado, neg:g.negociacao || 'pendente', fsAberta:!!g.fs_aberta });
 let loading = false;
 async function loadAlvos(){
   if (!S.me || !S.sb || loading) return;
@@ -1195,7 +1201,7 @@ function renderMeus(){
 }
 
 /* ---------------- PAINEL ---------------- */
-const STATUS = [['todos','Todos'],['pendente','Sem atribuição'],['atribuida','Atribuídas'],['sem_nota','Sem nota'],['executado','Executados'],['sem_exec','Sem execução']];
+const STATUS = [['todos','Todos'],['pendente','Sem atribuição'],['atribuida','Atribuídas'],['sem_nota','Sem nota'],['executado','Executados'],['sem_exec','Sem execução'],['fs','FS aberta']];
 function periodoSince(periodo){
   const n = new Date();
   const dayStr = off => { const d = new Date(n.getFullYear(), n.getMonth(), n.getDate() - off); return d.getFullYear() + '-' + pad2(d.getMonth()+1) + '-' + pad2(d.getDate()); };
@@ -1213,8 +1219,10 @@ function baseFiltered(){
     return true;
   });
 }
-const statusOk = (a, st) => { const g = S.gestao.get(a.id) || {}; return st === 'todos' || (st === 'pendente' && !g.atribuida) || (st === 'atribuida' && !!g.atribuida) || (st === 'sem_nota' && !g.nota) || (st === 'executado' && g.codExec != null) || (st === 'sem_exec' && g.codExec == null); };
+const statusOk = (a, st) => { const g = S.gestao.get(a.id) || {}; return st === 'todos' || (st === 'pendente' && !g.atribuida && !g.fsAberta) || (st === 'atribuida' && !!g.atribuida) || (st === 'sem_nota' && !g.nota) || (st === 'executado' && g.codExec != null) || (st === 'sem_exec' && g.codExec == null) || (st === 'fs' && !!g.fsAberta); };
 const alvoStatus = a => { const g = S.gestao.get(a.id) || {}; return g.codExec != null ? 'executado' : g.atribuida ? 'atribuido' : 'pendente'; };
+/* UC que já tem nota FS aberta: não gera nota MDFC, não é atribuída e fica fora do cálculo de eficiência */
+const fsOf = a => !!(S.gestao.get(a.id) || {}).fsAberta;
 const ST_LABEL = { pendente:'Sem atribuição', atribuido:'Atribuído', executado:'Executado' };
 /* acerto: null = ainda não dá para avaliar (falta o código apontado ou o executado) */
 const acertoOf = a => { const g = S.gestao.get(a.id) || {}; return (a.codigo != null && g.codExec != null) ? a.codigo === g.codExec : null; };
@@ -1265,7 +1273,7 @@ function renderAssert(){
   const st = $('#as-status'), body = $('#as-body');
   if (!S.loaded || !S.usersLoaded){ st.className = 'skeleton'; show(st, true, 'Carregando lançamentos…'); body.hidden = true; $('#as-kpis').replaceChildren(); return; }
   st.hidden = true; body.hidden = false;
-  const list = filterBy(S.assert);
+  const list = filterBy(S.assert).filter(a => !fsOf(a));
   const aval = list.filter(a => acertoOf(a) != null);
   const acertos = aval.filter(a => acertoOf(a)).length, diverg = aval.length - acertos;
   const aguard = list.filter(a => a.codigo != null && (S.gestao.get(a.id) || {}).codExec == null).length;
@@ -1321,7 +1329,7 @@ function popupFor(a){
     h('h3',{text:'Código ' + codeLabel(a.codigo)}),
     row('Data', fmtDay(a.dataLanc)), row('Apontado por', a.prospector || '—'),
     row('UC', a.uc || '—'), row('Instalação fiscal', a.medicaoFiscal || '—'), row('Alvo', a.alvo || '—'),
-    row('Situação', ST_LABEL[st] + (g.atribuida && g.equipe ? ' · ' + g.equipe : ''))
+    row('Situação', g.fsAberta ? 'FS aberta · não gera MDFC' : ST_LABEL[st] + (g.atribuida && g.equipe ? ' · ' + g.equipe : ''))
   ];
   if (g.codExec != null) kids.push(row('Cód. executado', codeLabel(g.codExec) + (ac == null ? '' : ac ? ' (acertou)' : ' (divergente)')));
   if (a.codigo === CODE_NEGOCIADOR) kids.push(row('Negociador', g.negEnv ? 'enviado · ' + NEG_LABEL[g.neg || 'pendente'] : 'ainda não enviado'));
@@ -1376,8 +1384,10 @@ function renderRanking(){
   const by = new Map();
   const get = nome => { if (!by.has(nome)) by.set(nome, { nome, lan:0, exe:0, aval:0, ok:0 }); return by.get(nome); };
   for (const nome of S.users.prospector) get(nome);
+  let fsN = 0;
   for (const a of alvosNoPeriodo){
     if (!a.prospector) continue;
+    if (fsOf(a)){ fsN++; continue; }
     const g = get(a.prospector), x = S.gestao.get(a.id) || {};
     g.lan++;
     if (x.codExec != null) g.exe++;
@@ -1404,7 +1414,8 @@ function renderRanking(){
     kpi('Alvos lançados', sum('lan')),
     kpi('Alvos executados', sum('exe')),
     kpi('Acerto geral', gAc == null ? '—' : gAc + '%', 'ok'),
-    kpi('Sem nenhum envio', semEnvio, semEnvio ? 'warn' : '')
+    kpi('Sem nenhum envio', semEnvio, semEnvio ? 'warn' : ''),
+    ...(fsN ? [kpi('FS aberta (fora do cálculo)', fsN)] : [])
   );
 
   if (!total){
@@ -1449,7 +1460,10 @@ function buildRow(a){
   td('Alvo').append(h('div',{class:'cellbox'}, r.cod, r.alvo, r.obsHint, r.locA));
   r.ver = h('button',{class:'btn sm verbtn',type:'button',onclick:()=>openDetail(a.id, true),'aria-label':'Ver detalhes e fotos'}, icon('i-eye',16), h('span',{text:'Ver'}), (r.fotos = h('span',{class:'pill'})));
   r.nota = h('input',{type:'text',class:'nota mono',maxlength:'40',id:'n-'+a.id,'aria-label':'Número da nota',placeholder:'Nº da nota',autocomplete:'off'});
-  td('Nº da nota','adm first').append(r.nota);
+  r.fsChk = h('input',{type:'checkbox',id:'fs-'+a.id}); r.fsTxt = h('span');
+  r.fsSw = h('label',{class:'sw'}, r.fsChk, r.fsTxt);
+  r.fsbar = h('div',{class:'fsbar',title:'UC que já tem nota FS aberta: não gera nota MDFC, não pode ser atribuída e fica fora do cálculo de eficiência do prospector.'}, r.fsSw);
+  td('Nº da nota','adm first').append(r.nota, r.fsbar);
   r.chk = h('input',{type:'checkbox',id:'c-'+a.id}); r.chkTxt = h('span');
   r.sw = h('label',{class:'sw'}, r.chk, r.chkTxt); td('Atribuída','adm').append(r.sw);
   r.por = h('select',{id:'p-'+a.id,'aria-label':'Atribuído por'}); td('Atribuído por','adm').append(r.por);
@@ -1469,12 +1483,18 @@ function buildRow(a){
   tr._r = r; tr._id = a.id; tr._dirty = false;
   const dirty = () => { tr._dirty = isDirty(tr); syncRow(tr); };
   r.nota.addEventListener('input', dirty);
+  r.fsChk.addEventListener('change', () => {
+    if (r.fsChk.checked){ r.chk.checked = false; r.por.value = ''; r.equipe.value = ''; }
+    dirty();
+  });
   r.chk.addEventListener('change', () => {
+    if (r.fsChk.checked){ r.chk.checked = false; return; }
     if (!r.chk.checked){ r.por.value = ''; r.equipe.value = ''; }
     else if (!r.por.value && S.me && adminNames().includes(S.me.usuario)) r.por.value = S.me.usuario;
     dirty();
   });
   const autoOn = () => {
+    if (r.fsChk.checked) return;
     if (!r.chk.checked && (r.por.value || r.equipe.value.trim())){
       r.chk.checked = true;
       if (!r.por.value && S.me && adminNames().includes(S.me.usuario)) r.por.value = S.me.usuario;
@@ -1492,13 +1512,17 @@ function buildRow(a){
 }
 const draftOf = tr => {
   const r = tr._r, b = baseOf(S.gestao.get(tr._id));
-  return { nota:r.nota.value.trim(), atribuida:r.chk.checked, por:r.por.value, equipe:r.equipe.value.trim(), exec:r.exec.value,
+  const fs = r.fsChk.checked;
+  return { nota:r.nota.value.trim(), fs, atribuida:fs ? false : r.chk.checked, por:fs ? '' : r.por.value, equipe:fs ? '' : r.equipe.value.trim(), exec:r.exec.value,
     negEnv:r.negbar ? r.negChk.checked : b.negEnv, neg:r.negbar ? r.negRes.value : b.neg };
 };
-function baseOf(g){ g = g || {}; return { nota:g.nota||'', atribuida:!!g.atribuida, por:g.atribuidoPor||'', equipe:g.equipe||'', exec:g.codExec == null ? '' : String(g.codExec), negEnv:!!g.negEnv, neg:g.neg||'pendente' }; }
+function baseOf(g){ g = g || {}; return { nota:g.nota||'', fs:!!g.fsAberta, atribuida:!!g.atribuida, por:g.atribuidoPor||'', equipe:g.equipe||'', exec:g.codExec == null ? '' : String(g.codExec), negEnv:!!g.negEnv, neg:g.neg||'pendente' }; }
 function isDirty(tr){ const d = draftOf(tr), b = baseOf(S.gestao.get(tr._id)); return Object.keys(b).some(k => d[k] !== b[k]); }
 function syncRow(tr){
   const r = tr._r, on = r.chk.checked;
+  const fs = r.fsChk.checked;
+  r.fsSw.classList.toggle('on', fs); r.fsTxt.textContent = 'FS aberta';
+  r.chk.disabled = fs; r.por.disabled = fs; r.equipe.disabled = fs;
   r.sw.classList.toggle('on', on); r.chkTxt.textContent = on ? 'Sim' : 'Não';
   const a = S.alvoMap.get(tr._id), ex = r.exec.value;
   if (!ex) r.acerto.replaceChildren('Aguardando execução');
@@ -1518,10 +1542,10 @@ function updateRow(tr, a){
   r.fotos.title = (a.fotos || []).length + ' foto(s)';
   fillSelect(r.por, adminNames(), tr._dirty ? r.por.value : b.por, 'Selecione');
   if (!tr._dirty){
-    r.nota.value = b.nota; r.chk.checked = b.atribuida; r.por.value = b.por; r.equipe.value = b.equipe; r.exec.value = b.exec;
+    r.nota.value = b.nota; r.fsChk.checked = b.fs; r.chk.checked = b.atribuida; r.por.value = b.por; r.equipe.value = b.equipe; r.exec.value = b.exec;
     if (r.negbar){ r.negChk.checked = b.negEnv; r.negRes.value = b.neg; }
   }
-  tr.className = b.atribuida ? 'st-ok' : 'st-pend';
+  tr.className = b.fs ? 'st-fs' : b.atribuida ? 'st-ok' : 'st-pend';
   tr._dirty = isDirty(tr); syncRow(tr);
 }
 async function saveRow(tr){
@@ -1533,7 +1557,7 @@ async function saveRow(tr){
   r.save.disabled = true; r.save.textContent = 'Salvando…';
   try {
     const { data, error } = await S.sb.from('gestao').upsert({
-      alvo_id:tr._id, nota:d.nota, atribuida:d.atribuida,
+      alvo_id:tr._id, nota:d.nota, fs_aberta:d.fs, atribuida:d.atribuida,
       atribuido_por:d.atribuida ? d.por : '', equipe:d.atribuida ? d.equipe : '',
       codigo_executado:d.exec === '' ? null : Number(d.exec),
       negociador_enviado:d.negEnv, negociacao:d.negEnv ? d.neg : 'pendente'
@@ -1596,7 +1620,7 @@ function csvCell(v, asText){
 $('#btn-csv').addEventListener('click', () => {
   const list = baseFiltered().filter(a => statusOk(a, S.filters.status));
   if (!list.length){ toast('Não há lançamentos para exportar com esses filtros.', true); return; }
-  const head = ['Data do lançamento','Registrado em','Prospector','Instalação fiscal','UC cliente','Medidor cliente','Leitura','Código','Descrição do código','Alvo','Latitude','Longitude','Observações','Fotos','Nº da nota','Atribuída','Atribuído por','Equipe','Atribuído em','Cód. executado','Resultado','Negociador enviado','Negociação'];
+  const head = ['Data do lançamento','Registrado em','Prospector','Instalação fiscal','UC cliente','Medidor cliente','Leitura','Código','Descrição do código','Alvo','Latitude','Longitude','Observações','Fotos','Nº da nota','Atribuída','Atribuído por','Equipe','Atribuído em','Cód. executado','Resultado','Negociador enviado','Negociação','Nota FS aberta'];
   const lines = [head.map(x => csvCell(x)).join(';')];
   for (const a of list){
     const g = S.gestao.get(a.id) || {};
@@ -1605,7 +1629,7 @@ $('#btn-csv').addEventListener('click', () => {
       csvCell(a.lat == null ? '' : fmtCoord(a.lat)), csvCell(a.lng == null ? '' : fmtCoord(a.lng)), csvCell(a.obs),
       csvCell((a.fotos||[]).length), csvCell(g.nota,true), csvCell(g.atribuida ? 'Sim' : 'Não'), csvCell(g.atribuidoPor), csvCell(g.equipe), csvCell(g.atribuidoEm ? fmtDate(g.atribuidoEm) : ''),
       csvCell(g.codExec == null ? '' : pad3(g.codExec), true), csvCell(acertoOf(a) == null ? '' : acertoOf(a) ? 'Acertou' : 'Divergente'),
-      csvCell(a.codigo === CODE_NEGOCIADOR ? (g.negEnv ? 'Sim' : 'Não') : ''), csvCell(a.codigo === CODE_NEGOCIADOR ? NEG_LABEL[g.neg || 'pendente'] : '')
+      csvCell(a.codigo === CODE_NEGOCIADOR ? (g.negEnv ? 'Sim' : 'Não') : ''), csvCell(a.codigo === CODE_NEGOCIADOR ? NEG_LABEL[g.neg || 'pendente'] : ''), csvCell(g.fsAberta ? 'Sim' : 'Não')
     ].join(';'));
   }
   const d = new Date(), pad = n => String(n).padStart(2,'0');
@@ -1754,7 +1778,7 @@ function openDetail(id, admin){
   parts.push(h('div',{class:'field'}, h('span',{class:'lbl',text:'Fotos (' + ids.length + ')'}), ids.length ? grid : h('p',{class:'hint',text:'Nenhuma foto anexada.'})));
   if (admin && S.isAdmin){
     parts.push(h('dl',{class:'kv'},
-      kv('Nº da nota', g.nota, true), kv('Atribuída', g.atribuida ? 'Sim' : 'Não'),
+      kv('Nº da nota', g.nota, true), kv('Nota FS aberta', g.fsAberta ? 'Sim (não gera MDFC)' : 'Não'), kv('Atribuída', g.atribuida ? 'Sim' : 'Não'),
       kv('Atribuído por', g.atribuidoPor), kv('Equipe', g.equipe), kv('Atribuído em', g.atribuidoEm ? fmtFull(g.atribuidoEm) : ''),
       kv('Cód. executado', g.codExec == null ? '' : codeLabel(g.codExec)),
       kv('Resultado', acertoOf(a) == null ? '' : acertoOf(a) ? 'Acertou' : 'Divergente'),
