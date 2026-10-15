@@ -214,10 +214,6 @@ input:disabled,select:disabled{opacity:.5;cursor:not-allowed}
 .pill.warn{background:var(--warn-bg);color:var(--warn)}
 td select.exec{width:100%;min-width:150px;max-width:230px}
 .acerto{margin-top:6px;min-height:24px;font-size:12.5px;color:var(--muted)}
-.fsbar{margin-top:6px}
-.fsbar .sw{min-height:28px;font-size:13px;font-weight:600;color:var(--muted);gap:6px}
-.fsbar .sw input{width:18px;height:18px;accent-color:var(--muted)}
-.fsbar .sw.on{color:var(--ink)}
 .negbar{margin-top:8px;padding:8px 10px;border:1.5px dashed var(--warn);border-radius:8px;background:var(--warn-bg);display:grid;gap:6px}
 .negbar b{font-family:var(--f-display);font-weight:600;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--warn)}
 .negbar select{min-width:0;width:100%}
@@ -1460,16 +1456,13 @@ function buildRow(a){
   td('Alvo').append(h('div',{class:'cellbox'}, r.cod, r.alvo, r.obsHint, r.locA));
   r.ver = h('button',{class:'btn sm verbtn',type:'button',onclick:()=>openDetail(a.id, true),'aria-label':'Ver detalhes e fotos'}, icon('i-eye',16), h('span',{text:'Ver'}), (r.fotos = h('span',{class:'pill'})));
   r.nota = h('input',{type:'text',class:'nota mono',maxlength:'40',id:'n-'+a.id,'aria-label':'Número da nota',placeholder:'Nº da nota',autocomplete:'off'});
-  r.fsChk = h('input',{type:'checkbox',id:'fs-'+a.id}); r.fsTxt = h('span');
-  r.fsSw = h('label',{class:'sw'}, r.fsChk, r.fsTxt);
-  r.fsbar = h('div',{class:'fsbar',title:'UC que já tem nota FS aberta: não gera nota MDFC, não pode ser atribuída e fica fora do cálculo de eficiência do prospector.'}, r.fsSw);
-  td('Nº da nota','adm first').append(r.nota, r.fsbar);
+  td('Nº da nota','adm first').append(r.nota);
   r.chk = h('input',{type:'checkbox',id:'c-'+a.id}); r.chkTxt = h('span');
   r.sw = h('label',{class:'sw'}, r.chk, r.chkTxt); td('Atribuída','adm').append(r.sw);
   r.por = h('select',{id:'p-'+a.id,'aria-label':'Atribuído por'}); td('Atribuído por','adm').append(r.por);
   r.equipe = h('input',{type:'text',class:'eqinput',id:'e-'+a.id,'aria-label':'Equipe atribuída',list:'dl-equipes',maxlength:'60',placeholder:'Digite a equipe',autocomplete:'off'}); td('Equipe','adm').append(r.equipe);
   r.save = h('button',{class:'btn primary sm save',type:'button',text:'Salvar',onclick:()=>saveRow(tr)});
-  r.exec = h('select',{class:'exec',id:'x-'+a.id,'aria-label':'Código executado pela equipe'}, h('option',{value:'',text:'Selecione'}), ...CODES.map(([c,d]) => h('option',{value:String(c),text:pad3(c) + ' · ' + d})));
+  r.exec = h('select',{class:'exec',id:'x-'+a.id,'aria-label':'Código executado pela equipe'}, h('option',{value:'',text:'Selecione'}), h('option',{value:'FS',text:'FS aberta · já tem nota (sem MDFC)'}), ...CODES.map(([c,d]) => h('option',{value:String(c),text:pad3(c) + ' · ' + d})));
   r.acerto = h('div',{class:'acerto'});
   const cx = h('div',{class:'cellbox'}, r.exec, r.acerto); td('Cód. executado','adm').append(cx);
   if (a.codigo === CODE_NEGOCIADOR){
@@ -1483,18 +1476,14 @@ function buildRow(a){
   tr._r = r; tr._id = a.id; tr._dirty = false;
   const dirty = () => { tr._dirty = isDirty(tr); syncRow(tr); };
   r.nota.addEventListener('input', dirty);
-  r.fsChk.addEventListener('change', () => {
-    if (r.fsChk.checked){ r.chk.checked = false; r.por.value = ''; r.equipe.value = ''; }
-    dirty();
-  });
   r.chk.addEventListener('change', () => {
-    if (r.fsChk.checked){ r.chk.checked = false; return; }
+    if (r.exec.value === 'FS'){ r.chk.checked = false; return; }
     if (!r.chk.checked){ r.por.value = ''; r.equipe.value = ''; }
     else if (!r.por.value && S.me && adminNames().includes(S.me.usuario)) r.por.value = S.me.usuario;
     dirty();
   });
   const autoOn = () => {
-    if (r.fsChk.checked) return;
+    if (r.exec.value === 'FS') return;
     if (!r.chk.checked && (r.por.value || r.equipe.value.trim())){
       r.chk.checked = true;
       if (!r.por.value && S.me && adminNames().includes(S.me.usuario)) r.por.value = S.me.usuario;
@@ -1503,7 +1492,10 @@ function buildRow(a){
   };
   r.por.addEventListener('change', autoOn);
   r.equipe.addEventListener('input', autoOn);
-  r.exec.addEventListener('change', dirty);
+  r.exec.addEventListener('change', () => {
+    if (r.exec.value === 'FS'){ r.chk.checked = false; r.por.value = ''; r.equipe.value = ''; }
+    dirty();
+  });
   if (r.negbar){
     r.negChk.addEventListener('change', () => { if (!r.negChk.checked) r.negRes.value = 'pendente'; dirty(); });
     r.negRes.addEventListener('change', dirty);
@@ -1512,20 +1504,20 @@ function buildRow(a){
 }
 const draftOf = tr => {
   const r = tr._r, b = baseOf(S.gestao.get(tr._id));
-  const fs = r.fsChk.checked;
+  const fs = r.exec.value === 'FS';
   return { nota:r.nota.value.trim(), fs, atribuida:fs ? false : r.chk.checked, por:fs ? '' : r.por.value, equipe:fs ? '' : r.equipe.value.trim(), exec:r.exec.value,
     negEnv:r.negbar ? r.negChk.checked : b.negEnv, neg:r.negbar ? r.negRes.value : b.neg };
 };
-function baseOf(g){ g = g || {}; return { nota:g.nota||'', fs:!!g.fsAberta, atribuida:!!g.atribuida, por:g.atribuidoPor||'', equipe:g.equipe||'', exec:g.codExec == null ? '' : String(g.codExec), negEnv:!!g.negEnv, neg:g.neg||'pendente' }; }
+function baseOf(g){ g = g || {}; return { nota:g.nota||'', fs:!!g.fsAberta, atribuida:!!g.atribuida, por:g.atribuidoPor||'', equipe:g.equipe||'', exec:g.fsAberta ? 'FS' : g.codExec == null ? '' : String(g.codExec), negEnv:!!g.negEnv, neg:g.neg||'pendente' }; }
 function isDirty(tr){ const d = draftOf(tr), b = baseOf(S.gestao.get(tr._id)); return Object.keys(b).some(k => d[k] !== b[k]); }
 function syncRow(tr){
   const r = tr._r, on = r.chk.checked;
-  const fs = r.fsChk.checked;
-  r.fsSw.classList.toggle('on', fs); r.fsTxt.textContent = 'FS aberta';
+  const fs = r.exec.value === 'FS';
   r.chk.disabled = fs; r.por.disabled = fs; r.equipe.disabled = fs;
   r.sw.classList.toggle('on', on); r.chkTxt.textContent = on ? 'Sim' : 'Não';
   const a = S.alvoMap.get(tr._id), ex = r.exec.value;
-  if (!ex) r.acerto.replaceChildren('Aguardando execução');
+  if (fs) r.acerto.replaceChildren(h('span',{class:'pill'}, icon('i-warn',14), 'Sem MDFC · fora da eficiência'));
+  else if (!ex) r.acerto.replaceChildren('Aguardando execução');
   else if (a && a.codigo != null){ const ok = Number(ex) === a.codigo; r.acerto.replaceChildren(h('span',{class:'pill ' + (ok ? 'ok' : 'warn')}, icon(ok ? 'i-ok' : 'i-warn', 14), ok ? 'Acertou' : 'Divergente (apontou ' + pad3(a.codigo) + ')')); }
   else r.acerto.replaceChildren('Alvo sem código apontado');
   if (r.negbar){ r.negTxt.textContent = r.negChk.checked ? 'Enviado' : 'Não enviado'; r.negSw.classList.toggle('on', r.negChk.checked); r.negRes.disabled = !r.negChk.checked; }
@@ -1542,7 +1534,7 @@ function updateRow(tr, a){
   r.fotos.title = (a.fotos || []).length + ' foto(s)';
   fillSelect(r.por, adminNames(), tr._dirty ? r.por.value : b.por, 'Selecione');
   if (!tr._dirty){
-    r.nota.value = b.nota; r.fsChk.checked = b.fs; r.chk.checked = b.atribuida; r.por.value = b.por; r.equipe.value = b.equipe; r.exec.value = b.exec;
+    r.nota.value = b.nota; r.chk.checked = b.atribuida; r.por.value = b.por; r.equipe.value = b.equipe; r.exec.value = b.exec;
     if (r.negbar){ r.negChk.checked = b.negEnv; r.negRes.value = b.neg; }
   }
   tr.className = b.fs ? 'st-fs' : b.atribuida ? 'st-ok' : 'st-pend';
@@ -1559,7 +1551,7 @@ async function saveRow(tr){
     const { data, error } = await S.sb.from('gestao').upsert({
       alvo_id:tr._id, nota:d.nota, fs_aberta:d.fs, atribuida:d.atribuida,
       atribuido_por:d.atribuida ? d.por : '', equipe:d.atribuida ? d.equipe : '',
-      codigo_executado:d.exec === '' ? null : Number(d.exec),
+      codigo_executado:(d.exec === '' || d.fs) ? null : Number(d.exec),
       negociador_enviado:d.negEnv, negociacao:d.negEnv ? d.neg : 'pendente'
     }, { onConflict:'alvo_id' }).select().single();
     if (error) throw error;
